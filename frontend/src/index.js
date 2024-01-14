@@ -16,7 +16,7 @@ import ProductScreen from './screens/ProductScreen';
 
 
 const router = createBrowserRouter( //create a browser router instance
-  createRoutesFromElements( //create routes from React elements
+  createRoutesFromElements( //create routes from React elements createRoutesFromElements is a helper that creates route objects from <Route> elements. It's useful if you prefer to create your routes as JSX instead of objects.
     <Route path='/' element={<App/>}> {/*main route of application*/}
       <Route index={true} path='/' element={<HomeScreen/>} /> {/*Nested Route which is default/indexed route*/}
       <Route  path='/product/:id' element={<ProductScreen/>} /> {/*id placeholder for path*/}

@@ -10,8 +10,8 @@ const App = () => {
     <>
     <Header/>
     <main className='py-3'>
-      <Container>
-     <Outlet/> {/**Child routes within parent routes  all other routes sign up cart product are rendered within this component*/}
+      <Container> {/**Containers are a fundamental building block of Bootstrap that contain, pad, and align your content within a given device or viewport. */}
+     <Outlet/> {/** An <Outlet> should be used in parent route elements to render their child route elements. This allows nested UI to show up when child routes are rendered. If the parent route matched exactly, it will render a child index route or nothing if there is no index route.*/}
       </Container>
       
     </main>

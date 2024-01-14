@@ -12,6 +12,7 @@ const Footer = () => {
                     A-Z Shop &copy; {currentYear}
                 </p>
                 </Col>
+                
             </Row>
         </Container>
     </footer>
