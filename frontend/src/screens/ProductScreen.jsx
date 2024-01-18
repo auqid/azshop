@@ -4,6 +4,8 @@ import { useGetProductsDetailsQuery } from "../slices/productsApiSlice";
 import {Row,Col,Image,ListGroup,Card,Button,} from 'react-bootstrap'
 import { Link } from "react-router-dom";
 import Rating from "../components/Rating";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 const ProductScreen = () => {
     const {id:productId} = useParams() //**useParams is a hook provided by the react-router-dom library in React. It is used to access the parameters in the URL. When a route is defined with a dynamic segment, like :id, useParams allows you to extract and use that parameter in your component.
@@ -15,9 +17,9 @@ const ProductScreen = () => {
 
     <Link className='btn btn-light my-3' to='/'>Go Back</Link>
     {isLoading? (
-    <h2>Loading...</h2>
+    <Loader/>
     ): error ? (
-    <div>{error?.data?.message || error.error}</div>
+        <Message variant='danger'>{error?.data?.message || error.error}</Message>
     ):(
         <Row>
         <Col md={5}>
