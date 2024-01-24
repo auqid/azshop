@@ -7,7 +7,7 @@ const protect = asynchHandler(async(req,res,next)=>{
     let token;
 
     //Read the JWT from the cookie
-    token = req.cookie.jwt;
+    token = req.cookies.jwt;
 
     if(token) {
         try{
@@ -23,7 +23,7 @@ const protect = asynchHandler(async(req,res,next)=>{
 
 
     }else{
-        req.status(401);
+        res.status(401);
         throw new Error('Not Authorized, no token')
     }
 
