@@ -1,7 +1,7 @@
 import { useParams,useNavigate } from "react-router-dom";
-import React from 'react'
+import React from 'react';
 import { useGetProductsDetailsQuery } from "../slices/productsApiSlice";
-import {Form,Row,Col,Image,ListGroup,Card,Button,} from 'react-bootstrap'
+import {Form,Row,Col,Image,ListGroup,Card,Button,} from 'react-bootstrap';
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Rating from "../components/Rating";
