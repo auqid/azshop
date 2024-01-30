@@ -17,7 +17,7 @@ import CartScreen from './screens/CartScreen';
 import {Provider} from 'react-redux';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import ShippingScreen from './screens/shippingScreen';
+import ShippingScreen from './screens/ShippingScreen';
 import PrivateRoute from './components/PrivateRoute';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
