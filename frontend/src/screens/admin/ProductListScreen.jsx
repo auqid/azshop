@@ -8,7 +8,6 @@ import Meta from '../../components/Meta';
 import {
   useGetProductsQuery,
   useDeleteProductMutation,
-  useCreateProductMutation,
 } from '../../slices/productsApiSlice';
 import { formatINR } from '../../utils/formatters';
 
