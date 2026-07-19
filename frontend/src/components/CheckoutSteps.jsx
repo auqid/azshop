@@ -1,65 +1,41 @@
-import React from 'react'
-import { Nav } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+import { Link } from 'react-router-dom';
 
-const CheckoutSteps = ({step1, step2, step3, step4}) => {
+const STEPS = [
+  { label: 'Sign in', to: '/login' },
+  { label: 'Shipping', to: '/shipping' },
+  { label: 'Payment', to: '/payment' },
+  { label: 'Place order', to: '/placeorder' },
+];
+
+// `current` is the 1-based index of the step the user is on.
+const CheckoutSteps = ({ current }) => {
   return (
-    <Nav className='justify-content-center mb-4'>
-        <Nav.Item>
-            {step1 ? (
-                <LinkContainer to='/login'>
-                <Nav.Link>
-                    Sign In
-                </Nav.Link>
-                </LinkContainer>
-            ):(
-              <Nav.Link disabled>
-                    Sign In
-              </Nav.Link>  
-            )}
-        </Nav.Item>
-        <Nav.Item>
-            {step2 ? (
-                <LinkContainer to='/shipping'>
-                <Nav.Link>
-                    Shipping
-                </Nav.Link>
-                </LinkContainer>
-            ):(
-              <Nav.Link disabled>
-                    Shipping
-              </Nav.Link>  
-            )}
-        </Nav.Item>
-        <Nav.Item>
-            {step3 ? (
-                <LinkContainer to='/payment'>
-                <Nav.Link>
-                    Payment
-                </Nav.Link>
-                </LinkContainer>
-            ):(
-              <Nav.Link disabled>
-                    Payment
-              </Nav.Link>  
-            )}
-        </Nav.Item>
-        <Nav.Item>
-            {step4 ? (
-                <LinkContainer to='/placeorder'>
-                <Nav.Link>
-                    Place Order
-                </Nav.Link>
-                </LinkContainer>
-            ):(
-              <Nav.Link disabled>
-                   Place Order
-              </Nav.Link>  
-            )}
-        </Nav.Item>
+    <ol className='steps'>
+      {STEPS.map((step, i) => {
+        const stepNumber = i + 1;
+        const state =
+          stepNumber < current
+            ? 'step step--done'
+            : stepNumber === current
+            ? 'step step--current'
+            : 'step';
 
-    </Nav>
-  )
-}
+        return (
+          <li key={step.to} className={state}>
+            {stepNumber < current ? (
+              <Link to={step.to} className='step__label'>
+                <span>{step.label}</span>
+              </Link>
+            ) : (
+              <span className='step__label'>
+                <span>{step.label}</span>
+              </span>
+            )}
+          </li>
+        );
+      })}
+    </ol>
+  );
+};
 
-export default CheckoutSteps
+export default CheckoutSteps;

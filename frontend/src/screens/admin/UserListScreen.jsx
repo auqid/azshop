@@ -1,14 +1,13 @@
-import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { FaTrash, FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
+import Meta from '../../components/Meta';
 import {
   useDeleteUserMutation,
   useGetUsersQuery,
 } from '../../slices/usersApiSlice';
-import { toast } from 'react-toastify';
 
 const UserListScreen = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
@@ -16,7 +15,7 @@ const UserListScreen = () => {
   const [deleteUser] = useDeleteUserMutation();
 
   const deleteHandler = async (id) => {
-    if (window.confirm('Are you sure')) {
+    if (window.confirm('Delete this user? This cannot be undone.')) {
       try {
         await deleteUser(id);
         refetch();
@@ -27,8 +26,10 @@ const UserListScreen = () => {
   };
 
   return (
-    <>
+    <div className='container page'>
+      <Meta title='Users — Nargis admin' />
       <h1>Users</h1>
+
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -36,58 +37,60 @@ const UserListScreen = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <Table striped bordered hover responsive className='table-sm'>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>ADMIN</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user._id}</td>
-                <td>{user.name}</td>
-                <td>
-                  <a href={`mailto:${user.email}`}>{user.email}</a>
-                </td>
-                <td>
-                  {user.isAdmin ? (
-                    <FaCheck style={{ color: 'green' }} />
-                  ) : (
-                    <FaTimes style={{ color: 'red' }} />
-                  )}
-                </td>
-                <td>
-                  {!user.isAdmin && (
-                    <>
-                      <LinkContainer
-                        to={`/admin/user/${user._id}/edit`}
-                        style={{ marginRight: '10px' }}
-                      >
-                        <Button variant='light' className='btn-sm'>
-                          <FaEdit />
-                        </Button>
-                      </LinkContainer>
-                      <Button
-                        variant='danger'
-                        className='btn-sm'
-                        onClick={() => deleteHandler(user._id)}
-                      >
-                        <FaTrash style={{ color: 'white' }} />
-                      </Button>
-                    </>
-                  )}
-                </td>
+        <div className='table-wrap'>
+          <table className='table'>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Admin</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user._id}>
+                  <td className='cell-mono'>{user._id}</td>
+                  <td>{user.name}</td>
+                  <td>
+                    <a href={`mailto:${user.email}`}>{user.email}</a>
+                  </td>
+                  <td>
+                    {user.isAdmin ? (
+                      <FaCheck className='cell-ok' aria-label='Admin' />
+                    ) : (
+                      <FaTimes className='cell-no' aria-label='Not admin' />
+                    )}
+                  </td>
+                  <td>
+                    {!user.isAdmin && (
+                      <div className='table__actions'>
+                        <Link
+                          to={`/admin/user/${user._id}/edit`}
+                          className='btn btn--ghost btn--sm btn--icon'
+                          aria-label={`Edit ${user.name}`}
+                        >
+                          <FaEdit />
+                        </Link>
+                        <button
+                          type='button'
+                          className='btn btn--danger btn--sm btn--icon'
+                          aria-label={`Delete ${user.name}`}
+                          onClick={() => deleteHandler(user._id)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

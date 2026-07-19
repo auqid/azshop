@@ -1,0 +1,7 @@
+/* Nargis design system — see tokens.css for the palette/type scale.
+   Import order matters: tokens -> base -> chrome -> components -> screens. */
+@import './tokens.css';
+@import './base.css';
+@import './chrome.css';
+@import './components.css';
+@import './screens.css';

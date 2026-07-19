@@ -1,0 +1,44 @@
+/* ============================================================
+   Nargis — design system
+   Palette: paper / walnut ink / deodar green / saffron / madder
+   Type:    Fraunces (display) · Karla (body)
+   Signature: kani-weave border strip
+   ============================================================ */
+
+:root {
+  /* color */
+  --paper: #faf6ed;
+  --card: #fffdf7;
+  --ink: #2b2013;
+  --ink-soft: #57493a;
+  --reed: #857762;
+  --line: #e6dcc8;
+  --line-soft: #efe8d8;
+  --deodar: #1e3b33;
+  --deodar-deep: #142b25;
+  --ivory: #ede6d4;
+  --saffron: #c96f1e;
+  --saffron-deep: #a4570f;
+  --saffron-tint: #f7e8d4;
+  --rogan: #a43e32;
+  --rogan-tint: #f5e2df;
+  --moss: #2e6b4f;
+  --moss-tint: #e2eee4;
+  --gold: #d9a13b;
+
+  /* type */
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body: 'Karla', 'Helvetica Neue', Arial, sans-serif;
+
+  /* shape */
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 16px;
+  --shadow-card: 0 1px 2px rgba(43, 32, 19, 0.06),
+    0 8px 24px -12px rgba(43, 32, 19, 0.18);
+  --shadow-lift: 0 2px 4px rgba(43, 32, 19, 0.08),
+    0 16px 36px -14px rgba(43, 32, 19, 0.28);
+
+  /* the kani-weave strip: alternating saffron / ivory / madder diamonds */
+  --kani-strip: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='10'%3E%3Crect width='40' height='10' fill='%23142b25'/%3E%3Cpath d='M5 1.2 8.8 5 5 8.8 1.2 5Z' fill='%23c96f1e'/%3E%3Cpath d='M15 1.2 18.8 5 15 8.8 11.2 5Z' fill='%23ede6d4'/%3E%3Cpath d='M25 1.2 28.8 5 25 8.8 21.2 5Z' fill='%23a43e32'/%3E%3Cpath d='M35 1.2 38.8 5 35 8.8 31.2 5Z' fill='%23ede6d4'/%3E%3C/svg%3E");
+}

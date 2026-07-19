@@ -1,110 +1,103 @@
-import { useState } from 'react'
-import {Form, Button} from 'react-bootstrap'
-import FormContainer from '../components/FormContainer'
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { saveShippingAddress } from '../slices/cartSlice'
-import CheckoutSteps from '../components/CheckoutSteps'
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import FormContainer from '../components/FormContainer';
+import CheckoutSteps from '../components/CheckoutSteps';
+import Meta from '../components/Meta';
+import { saveShippingAddress } from '../slices/cartSlice';
 
 const ShippingScreen = () => {
-const cart = useSelector((state)=> state.cart);
-const {shippingAddress} = cart;
-  
-  
-const [address,setAddress] = useState(shippingAddress?.address || '')
-const [city,setCity] = useState(shippingAddress?.city || '')
-const [postalCode,setPostalCode] = useState(shippingAddress?.postalCode || '')
-const [country,setCountry] = useState(shippingAddress?.country || '')
+  const { shippingAddress } = useSelector((state) => state.cart);
 
-const navigate = useNavigate();
-const dispatch = useDispatch();
+  const [address, setAddress] = useState(shippingAddress?.address || '');
+  const [city, setCity] = useState(shippingAddress?.city || '');
+  const [postalCode, setPostalCode] = useState(
+    shippingAddress?.postalCode || ''
+  );
+  const [country, setCountry] = useState(shippingAddress?.country || 'India');
 
-  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-const submitHandler = (e) =>{
-    
+  const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShippingAddress({address,city,postalCode,country}))
+    dispatch(saveShippingAddress({ address, city, postalCode, country }));
     navigate('/payment');
-    
-  }
-  
-  
-    return (
-    <FormContainer>
-        <CheckoutSteps step1 step2/>
-        <h1>Shipping</h1>
-        <Form onSubmit={submitHandler}>
-            <Form.Group controlId='address' className='my-2'>
-                <Form.Label>
-                    Address
-                </Form.Label>
-                <Form.Control
-                type='text'
-                placeholder='Enter Address'
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                >
+  };
 
-                </Form.Control>
+  return (
+    <div className='container page'>
+      <Meta title='Shipping — Nargis' />
+      <CheckoutSteps current={2} />
 
-            </Form.Group>
-            <Form.Group controlId='City' className='my-2'>
-                <Form.Label>
-                    City
-                </Form.Label>
-                <Form.Control
-                type='text'
-                placeholder='Enter City'
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                >
+      <FormContainer>
+        <h1>Shipping address</h1>
 
-                </Form.Control>
+        <form onSubmit={submitHandler}>
+          <div className='field'>
+            <label className='field__label' htmlFor='address'>
+              Address
+            </label>
+            <input
+              id='address'
+              className='field__input'
+              type='text'
+              required
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
 
-            </Form.Group>
-            <Form.Group controlId='postalCode' className='my-2'>
-                <Form.Label>
-                    Postal Code
-                </Form.Label>
-                <Form.Control
-                type='text'
-                placeholder='Enter Postal Code'
-                value={postalCode}
-                onChange={(e) => setPostalCode(e.target.value)}
-                >
+          <div className='field'>
+            <label className='field__label' htmlFor='city'>
+              City
+            </label>
+            <input
+              id='city'
+              className='field__input'
+              type='text'
+              required
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
 
-                </Form.Control>
+          <div className='field'>
+            <label className='field__label' htmlFor='postalCode'>
+              PIN code
+            </label>
+            <input
+              id='postalCode'
+              className='field__input'
+              type='text'
+              inputMode='numeric'
+              required
+              value={postalCode}
+              onChange={(e) => setPostalCode(e.target.value)}
+            />
+          </div>
 
-            </Form.Group>
-            <Form.Group controlId='country' className='my-2'>
-                <Form.Label>
-                    Country
-                </Form.Label>
-                <Form.Control
-                type='text'
-                placeholder='Enter Country'
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                >
+          <div className='field'>
+            <label className='field__label' htmlFor='country'>
+              Country
+            </label>
+            <input
+              id='country'
+              className='field__input'
+              type='text'
+              required
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+            />
+          </div>
 
-                </Form.Control>
+          <button type='submit' className='btn btn--block'>
+            Continue to payment
+          </button>
+        </form>
+      </FormContainer>
+    </div>
+  );
+};
 
-            </Form.Group>
-            <Button
-            type='submit'
-            variant='peimary'
-            className='my-2'
-            >Continue
-            </Button>
-
-        </Form>
-
-
-
-    </FormContainer>
-  )
-}
-
-export default ShippingScreen
+export default ShippingScreen;

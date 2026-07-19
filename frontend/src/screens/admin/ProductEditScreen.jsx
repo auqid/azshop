@@ -1,18 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { FaArrowLeft } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import FormContainer from '../../components/FormContainer';
-import { toast } from 'react-toastify';
+import Meta from '../../components/Meta';
 import {
   useGetProductDetailsQuery,
+  useGetCategoriesQuery,
+  useCreateProductMutation,
   useUpdateProductMutation,
   useUploadProductImageMutation,
 } from '../../slices/productsApiSlice';
 
+// Handles both /admin/product/create (no id) and /admin/product/:id/edit.
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
+  const isCreating = !productId;
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
@@ -27,7 +32,12 @@ const ProductEditScreen = () => {
     isLoading,
     refetch,
     error,
-  } = useGetProductDetailsQuery(productId);
+  } = useGetProductDetailsQuery(productId, { skip: isCreating });
+
+  const { data: categories } = useGetCategoriesQuery();
+
+  const [createProduct, { isLoading: loadingCreate }] =
+    useCreateProductMutation();
 
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
@@ -36,27 +46,6 @@ const ProductEditScreen = () => {
     useUploadProductImageMutation();
 
   const navigate = useNavigate();
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    try {
-      await updateProduct({
-        productId,
-        name,
-        price,
-        image,
-        brand,
-        category,
-        description,
-        countInStock,
-      }).unwrap(); // NOTE: here we need to unwrap the Promise to catch any rejection in our catch block
-      toast.success('Product updated');
-      refetch();
-      navigate('/admin/productlist');
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };
 
   useEffect(() => {
     if (product) {
@@ -70,6 +59,32 @@ const ProductEditScreen = () => {
     }
   }, [product]);
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const fields = {
+      name,
+      price,
+      image,
+      brand,
+      category,
+      description,
+      countInStock,
+    };
+    try {
+      if (isCreating) {
+        await createProduct(fields).unwrap();
+        toast.success('Product created');
+      } else {
+        await updateProduct({ productId, ...fields }).unwrap();
+        toast.success('Product updated');
+        refetch();
+      }
+      navigate('/admin/productlist');
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
   const uploadFileHandler = async (e) => {
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
@@ -82,107 +97,153 @@ const ProductEditScreen = () => {
     }
   };
 
+  const saving = loadingCreate || loadingUpdate;
+
   return (
-    <>
-      <Link to='/admin/productlist' className='btn btn-light my-3'>
-        Go Back
+    <div className='container page'>
+      <Meta
+        title={
+          isCreating ? 'Add product — Nargis admin' : 'Edit product — Nargis admin'
+        }
+      />
+      <Link to='/admin/productlist' className='back-link'>
+        <FaArrowLeft /> Back to products
       </Link>
+
       <FormContainer>
-        <h1>Edit Product</h1>
-        {loadingUpdate && <Loader />}
-        {isLoading ? (
+        <h1>{isCreating ? 'Add product' : 'Edit product'}</h1>
+        {saving && <Loader small />}
+
+        {!isCreating && isLoading ? (
           <Loader />
-        ) : error ? (
-          <Message variant='danger'>{error.data.message}</Message>
+        ) : !isCreating && error ? (
+          <Message variant='danger'>
+            {error?.data?.message || error.error}
+          </Message>
         ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId='name'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter name'
+          <form onSubmit={submitHandler}>
+            <div className='field'>
+              <label className='field__label' htmlFor='name'>
+                Name
+              </label>
+              <input
+                id='name'
+                className='field__input'
+                type='text'
+                required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              />
+            </div>
 
-            <Form.Group controlId='price'>
-              <Form.Label>Price</Form.Label>
-              <Form.Control
+            <div className='field'>
+              <label className='field__label' htmlFor='price'>
+                Price (₹)
+              </label>
+              <input
+                id='price'
+                className='field__input'
                 type='number'
-                placeholder='Enter price'
+                min='0'
+                required
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              />
+            </div>
 
-            <Form.Group controlId='image'>
-              <Form.Label>Image</Form.Label>
-              <Form.Control
+            <div className='field'>
+              <label className='field__label' htmlFor='image'>
+                Image
+              </label>
+              <input
+                id='image'
+                className='field__input'
                 type='text'
-                placeholder='Enter image url'
+                placeholder='Uploads fill this in automatically'
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.Control
-                label='Choose File'
-                onChange={uploadFileHandler}
+              />
+              <input
+                className='field__input'
+                style={{ marginTop: '0.5rem' }}
                 type='file'
-              ></Form.Control>
-              {loadingUpload && <Loader />}
-            </Form.Group>
+                accept='image/*'
+                onChange={uploadFileHandler}
+              />
+              {loadingUpload && <Loader small />}
+            </div>
 
-            <Form.Group controlId='brand'>
-              <Form.Label>Brand</Form.Label>
-              <Form.Control
+            <div className='field'>
+              <label className='field__label' htmlFor='brand'>
+                Craft house
+              </label>
+              <input
+                id='brand'
+                className='field__input'
                 type='text'
-                placeholder='Enter brand'
+                required
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              />
+            </div>
 
-            <Form.Group controlId='countInStock'>
-              <Form.Label>Count In Stock</Form.Label>
-              <Form.Control
+            <div className='field'>
+              <label className='field__label' htmlFor='countInStock'>
+                Count in stock
+              </label>
+              <input
+                id='countInStock'
+                className='field__input'
                 type='number'
-                placeholder='Enter countInStock'
+                min='0'
+                required
                 value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              />
+            </div>
 
-            <Form.Group controlId='category'>
-              <Form.Label>Category</Form.Label>
-              <Form.Control
+            <div className='field'>
+              <label className='field__label' htmlFor='category'>
+                Category
+              </label>
+              <input
+                id='category'
+                className='field__input'
                 type='text'
-                placeholder='Enter category'
+                required
+                list='category-options'
+                placeholder='Pick an existing category or type a new one'
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              />
+              <datalist id='category-options'>
+                {(categories || []).map((c) => (
+                  <option key={c} value={c} />
+                ))}
+              </datalist>
+            </div>
 
-            <Form.Group controlId='description'>
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter description'
+            <div className='field'>
+              <label className='field__label' htmlFor='description'>
+                Description
+              </label>
+              <textarea
+                id='description'
+                className='field__input'
+                rows='4'
+                required
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              ></textarea>
+            </div>
 
-            <Button
-              type='submit'
-              variant='primary'
-              style={{ marginTop: '1rem' }}
-            >
-              Update
-            </Button>
-          </Form>
+            <button type='submit' className='btn btn--block' disabled={saving}>
+              {isCreating ? 'Create product' : 'Save changes'}
+            </button>
+          </form>
         )}
       </FormContainer>
-    </>
+    </div>
   );
 };
 
