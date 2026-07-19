@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import colors from 'colors';
 import users from './data/users.js';
 import products from './data/products.js';
+import reviewsByProduct from './data/reviews.js';
 import User from './models/userModel.js';
 import Product from './models/productModel.js';
 import Order from './models/orderModel.js';
@@ -21,9 +21,34 @@ const importData = async () => {
     const createdUsers = await User.insertMany(users);
 
     const adminUser = createdUsers[0]._id;
+    const userIdByName = Object.fromEntries(
+      createdUsers.map((u) => [u.name, u._id])
+    );
 
     const sampleProducts = products.map((product) => {
-      return { ...product, user: adminUser };
+      const seedReviews = (reviewsByProduct[product.name] || []).map((r) => ({
+        name: r.user,
+        user: userIdByName[r.user],
+        rating: r.rating,
+        comment: r.comment,
+      }));
+
+      const rating =
+        seedReviews.length > 0
+          ? Math.round(
+              (seedReviews.reduce((acc, r) => acc + r.rating, 0) /
+                seedReviews.length) *
+                10
+            ) / 10
+          : 0;
+
+      return {
+        ...product,
+        user: adminUser,
+        reviews: seedReviews,
+        numReviews: seedReviews.length,
+        rating,
+      };
     });
 
     await Product.insertMany(sampleProducts);

@@ -1,16 +1,7 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Row,
-  Col,
-  Image,
-  ListGroup,
-  Card,
-  Button,
-  Form,
-} from 'react-bootstrap';
+import { FaArrowLeft } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import {
   useGetProductDetailsQuery,
@@ -21,6 +12,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { addToCart } from '../slices/cartSlice';
+import { formatINR, formatDate } from '../utils/formatters';
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -29,13 +21,8 @@ const ProductScreen = () => {
   const navigate = useNavigate();
 
   const [qty, setQty] = useState(1);
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState('');
   const [comment, setComment] = useState('');
-
-  const addToCartHandler = () => {
-    dispatch(addToCart({ ...product, qty }));
-    navigate('/cart');
-  };
 
   const {
     data: product,
@@ -49,27 +36,31 @@ const ProductScreen = () => {
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
 
+  const addToCartHandler = () => {
+    dispatch(addToCart({ ...product, qty }));
+    navigate('/cart');
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
     try {
-      await createReview({
-        productId,
-        rating,
-        comment,
-      }).unwrap();
+      await createReview({ productId, rating, comment }).unwrap();
       refetch();
-      toast.success('Review created successfully');
+      setRating('');
+      setComment('');
+      toast.success('Review added');
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
 
   return (
-    <>
-      <Link className='btn btn-light my-3' to='/'>
-        Go Back
+    <div className='container page'>
+      <Link to='/' className='back-link'>
+        <FaArrowLeft /> Back to all crafts
       </Link>
+
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -79,151 +70,167 @@ const ProductScreen = () => {
       ) : (
         <>
           <Meta title={product.name} description={product.description} />
-          <Row>
-            <Col md={6}>
-              <Image src={product.image} alt={product.name} fluid />
-            </Col>
-            <Col md={3}>
-              <ListGroup variant='flush'>
-                <ListGroup.Item>
-                  <h3>{product.name}</h3>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Rating
-                    value={product.rating}
-                    text={`${product.numReviews} reviews`}
-                  />
-                </ListGroup.Item>
-                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-                <ListGroup.Item>
-                  Description: {product.description}
-                </ListGroup.Item>
-              </ListGroup>
-            </Col>
-            <Col md={3}>
-              <Card>
-                <ListGroup variant='flush'>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Price:</Col>
-                      <Col>
-                        <strong>${product.price}</strong>
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Status:</Col>
-                      <Col>
-                        {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
 
-                  {/* Qty Select */}
+          <div className='product-detail'>
+            <div className='product-detail__image'>
+              <img src={product.image} alt={product.name} />
+            </div>
+
+            <div>
+              <div className='eyebrow product-detail__brand'>
+                {product.brand} ·{' '}
+                <Link
+                  to={`/category/${encodeURIComponent(product.category)}`}
+                  style={{ color: 'inherit' }}
+                >
+                  {product.category}
+                </Link>
+              </div>
+              <h1>{product.name}</h1>
+              <Rating
+                value={product.rating}
+                text={`${product.numReviews} review${
+                  product.numReviews === 1 ? '' : 's'
+                }`}
+              />
+              <div className='product-detail__price'>
+                {formatINR(product.price)}
+              </div>
+              <p className='product-detail__desc'>{product.description}</p>
+
+              <div className='buy-box'>
+                <div className='buy-box__row'>
+                  <span
+                    className={
+                      product.countInStock > 0
+                        ? 'stock-flag stock-flag--in'
+                        : 'stock-flag stock-flag--out'
+                    }
+                  >
+                    {product.countInStock > 0
+                      ? `In stock · ${product.countInStock} left`
+                      : 'Out of stock'}
+                  </span>
+
                   {product.countInStock > 0 && (
-                    <ListGroup.Item>
-                      <Row>
-                        <Col>Qty</Col>
-                        <Col>
-                          <Form.Control
-                            as='select'
-                            value={qty}
-                            onChange={(e) => setQty(Number(e.target.value))}
-                          >
-                            {[...Array(product.countInStock).keys()].map(
-                              (x) => (
-                                <option key={x + 1} value={x + 1}>
-                                  {x + 1}
-                                </option>
-                              )
-                            )}
-                          </Form.Control>
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-                  )}
-
-                  <ListGroup.Item>
-                    <Button
-                      className='btn-block'
-                      type='button'
-                      disabled={product.countInStock === 0}
-                      onClick={addToCartHandler}
-                    >
-                      Add To Cart
-                    </Button>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Card>
-            </Col>
-          </Row>
-          <Row className='review'>
-            <Col md={6}>
-              <h2>Reviews</h2>
-              {product.reviews.length === 0 && <Message>No Reviews</Message>}
-              <ListGroup variant='flush'>
-                {product.reviews.map((review) => (
-                  <ListGroup.Item key={review._id}>
-                    <strong>{review.name}</strong>
-                    <Rating value={review.rating} />
-                    <p>{review.createdAt.substring(0, 10)}</p>
-                    <p>{review.comment}</p>
-                  </ListGroup.Item>
-                ))}
-                <ListGroup.Item>
-                  <h2>Write a Customer Review</h2>
-
-                  {loadingProductReview && <Loader />}
-
-                  {userInfo ? (
-                    <Form onSubmit={submitHandler}>
-                      <Form.Group className='my-2' controlId='rating'>
-                        <Form.Label>Rating</Form.Label>
-                        <Form.Control
-                          as='select'
-                          required
-                          value={rating}
-                          onChange={(e) => setRating(e.target.value)}
-                        >
-                          <option value=''>Select...</option>
-                          <option value='1'>1 - Poor</option>
-                          <option value='2'>2 - Fair</option>
-                          <option value='3'>3 - Good</option>
-                          <option value='4'>4 - Very Good</option>
-                          <option value='5'>5 - Excellent</option>
-                        </Form.Control>
-                      </Form.Group>
-                      <Form.Group className='my-2' controlId='comment'>
-                        <Form.Label>Comment</Form.Label>
-                        <Form.Control
-                          as='textarea'
-                          row='3'
-                          required
-                          value={comment}
-                          onChange={(e) => setComment(e.target.value)}
-                        ></Form.Control>
-                      </Form.Group>
-                      <Button
-                        disabled={loadingProductReview}
-                        type='submit'
-                        variant='primary'
+                    <label>
+                      <span className='field__label'>Quantity</span>
+                      <select
+                        className='field__input qty-select'
+                        value={qty}
+                        onChange={(e) => setQty(Number(e.target.value))}
                       >
-                        Submit
-                      </Button>
-                    </Form>
-                  ) : (
-                    <Message>
-                      Please <Link to='/login'>sign in</Link> to write a review
-                    </Message>
+                        {[...Array(product.countInStock).keys()].map((x) => (
+                          <option key={x + 1} value={x + 1}>
+                            {x + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
                   )}
-                </ListGroup.Item>
-              </ListGroup>
-            </Col>
-          </Row>
+                </div>
+
+                <button
+                  type='button'
+                  className='btn btn--block'
+                  disabled={product.countInStock === 0}
+                  onClick={addToCartHandler}
+                >
+                  Add to cart
+                </button>
+                <p
+                  style={{
+                    margin: '0.75rem 0 0',
+                    fontSize: '0.85rem',
+                    color: 'var(--reed)',
+                  }}
+                >
+                  Free shipping on orders over ₹2,000 · Cash on Delivery
+                  available
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <section className='reviews'>
+            <div className='section-head'>
+              <h2>Reviews</h2>
+            </div>
+
+            {product.reviews.length === 0 && (
+              <Message>No reviews yet. Be the first to write one.</Message>
+            )}
+
+            {product.reviews.map((review) => (
+              <article key={review._id} className='review-card'>
+                <div className='review-card__head'>
+                  <span className='review-card__name'>{review.name}</span>
+                  <Rating value={review.rating} />
+                  <span className='review-card__date'>
+                    {formatDate(review.createdAt)}
+                  </span>
+                </div>
+                <p>{review.comment}</p>
+              </article>
+            ))}
+
+            <div style={{ marginTop: '2rem' }}>
+              <h3>Write a review</h3>
+
+              {loadingProductReview && <Loader small />}
+
+              {userInfo ? (
+                <form onSubmit={submitHandler}>
+                  <div className='field'>
+                    <label className='field__label' htmlFor='rating'>
+                      Rating
+                    </label>
+                    <select
+                      id='rating'
+                      className='field__input'
+                      required
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                    >
+                      <option value=''>Choose a rating…</option>
+                      <option value='1'>1 — Poor</option>
+                      <option value='2'>2 — Fair</option>
+                      <option value='3'>3 — Good</option>
+                      <option value='4'>4 — Very good</option>
+                      <option value='5'>5 — Excellent</option>
+                    </select>
+                  </div>
+                  <div className='field'>
+                    <label className='field__label' htmlFor='comment'>
+                      Comment
+                    </label>
+                    <textarea
+                      id='comment'
+                      className='field__input'
+                      rows='3'
+                      required
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    ></textarea>
+                  </div>
+                  <button
+                    type='submit'
+                    className='btn'
+                    disabled={loadingProductReview}
+                  >
+                    Post review
+                  </button>
+                </form>
+              ) : (
+                <Message>
+                  <Link to='/login'>Sign in</Link> to write a review.
+                </Message>
+              )}
+            </div>
+          </section>
         </>
       )}
-    </>
+    </div>
   );
 };
 

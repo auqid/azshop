@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import FormContainer from '../../components/FormContainer';
-import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import Meta from '../../components/Meta';
 import {
   useGetUserDetailsQuery,
   useUpdateUserMutation,
@@ -28,18 +28,6 @@ const UserEditScreen = () => {
 
   const navigate = useNavigate();
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    try {
-      await updateUser({ userId, name, email, isAdmin });
-      toast.success('user updated successfully');
-      refetch();
-      navigate('/admin/userlist');
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };
-
   useEffect(() => {
     if (user) {
       setName(user.name);
@@ -48,14 +36,29 @@ const UserEditScreen = () => {
     }
   }, [user]);
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await updateUser({ userId, name, email, isAdmin });
+      toast.success('User updated');
+      refetch();
+      navigate('/admin/userlist');
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
   return (
-    <>
-      <Link to='/admin/userlist' className='btn btn-light my-3'>
-        Go Back
+    <div className='container page'>
+      <Meta title='Edit user — Nargis admin' />
+      <Link to='/admin/userlist' className='back-link'>
+        <FaArrowLeft /> Back to users
       </Link>
+
       <FormContainer>
-        <h1>Edit User</h1>
-        {loadingUpdate && <Loader />}
+        <h1>Edit user</h1>
+        {loadingUpdate && <Loader small />}
+
         {isLoading ? (
           <Loader />
         ) : error ? (
@@ -63,43 +66,59 @@ const UserEditScreen = () => {
             {error?.data?.message || error.error}
           </Message>
         ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group className='my-2' controlId='name'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter name'
+          <form onSubmit={submitHandler}>
+            <div className='field'>
+              <label className='field__label' htmlFor='name'>
+                Name
+              </label>
+              <input
+                id='name'
+                className='field__input'
+                type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              />
+            </div>
 
-            <Form.Group className='my-2' controlId='email'>
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control
+            <div className='field'>
+              <label className='field__label' htmlFor='email'>
+                Email address
+              </label>
+              <input
+                id='email'
+                className='field__input'
                 type='email'
-                placeholder='Enter email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              />
+            </div>
 
-            <Form.Group className='my-2' controlId='isadmin'>
-              <Form.Check
-                type='checkbox'
-                label='Is Admin'
-                checked={isAdmin}
-                onChange={(e) => setIsAdmin(e.target.checked)}
-              ></Form.Check>
-            </Form.Group>
+            <div className='field'>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  fontWeight: 600,
+                }}
+              >
+                <input
+                  type='checkbox'
+                  checked={isAdmin}
+                  style={{ accentColor: 'var(--saffron)' }}
+                  onChange={(e) => setIsAdmin(e.target.checked)}
+                />
+                Administrator
+              </label>
+            </div>
 
-            <Button type='submit' variant='primary'>
-              Update
-            </Button>
-          </Form>
+            <button type='submit' className='btn btn--block'>
+              Save changes
+            </button>
+          </form>
         )}
       </FormContainer>
-    </>
+    </div>
   );
 };
 

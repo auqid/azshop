@@ -1,6 +1,7 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import Order from '../models/orderModel.js';
 import Product from '../models/productModel.js';
+import User from '../models/userModel.js';
 import { calcPrices } from '../utils/calcPrices.js';
 import { verifyPayPalPayment, checkIfNewTransaction } from '../utils/paypal.js';
 
@@ -121,6 +122,35 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Mark a Cash on Delivery order as paid
+// @route   PUT /api/orders/:id/pay-cod
+// @access  Private/Admin
+const updateCodOrderToPaid = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    if (order.paymentMethod !== 'Cash on Delivery') {
+      res.status(400);
+      throw new Error('Only Cash on Delivery orders can be marked paid manually');
+    }
+
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    order.paymentResult = {
+      id: `COD-${order._id}`,
+      status: 'COLLECTED',
+      update_time: new Date().toISOString(),
+    };
+
+    const updatedOrder = await order.save();
+
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
 // @desc    Update order to delivered
 // @route   GET /api/orders/:id/deliver
 // @access  Private/Admin
@@ -148,11 +178,47 @@ const getOrders = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
+// @desc    Store totals for the admin dashboard
+// @route   GET /api/orders/summary
+// @access  Private/Admin
+const getOrderSummary = asyncHandler(async (req, res) => {
+  const [revenueAgg, ordersCount, unpaidCod, undelivered, productsCount, outOfStock, usersCount, recentOrders] =
+    await Promise.all([
+      Order.aggregate([
+        { $match: { isPaid: true } },
+        { $group: { _id: null, total: { $sum: '$totalPrice' } } },
+      ]),
+      Order.countDocuments(),
+      Order.countDocuments({ isPaid: false, paymentMethod: 'Cash on Delivery' }),
+      Order.countDocuments({ isDelivered: false }),
+      Product.countDocuments(),
+      Product.countDocuments({ countInStock: 0 }),
+      User.countDocuments(),
+      Order.find({})
+        .sort({ createdAt: -1 })
+        .limit(6)
+        .populate('user', 'name'),
+    ]);
+
+  res.json({
+    paidRevenue: revenueAgg[0]?.total || 0,
+    ordersCount,
+    unpaidCod,
+    undelivered,
+    productsCount,
+    outOfStock,
+    usersCount,
+    recentOrders,
+  });
+});
+
 export {
   addOrderItems,
   getMyOrders,
   getOrderById,
   updateOrderToPaid,
+  updateCodOrderToPaid,
   updateOrderToDelivered,
   getOrders,
+  getOrderSummary,
 };

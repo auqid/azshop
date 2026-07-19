@@ -5,24 +5,63 @@ import Product from '../models/productModel.js';
 // @route   GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = process.env.PAGINATION_LIMIT;
+  const pageSize = Number(process.env.PAGINATION_LIMIT) || 8;
   const page = Number(req.query.pageNumber) || 1;
 
-  const keyword = req.query.keyword
-    ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
-      }
-    : {};
+  const filter = {};
 
-  const count = await Product.countDocuments({ ...keyword });
-  const products = await Product.find({ ...keyword })
+  // Search across name, brand, category and description
+  if (req.query.keyword) {
+    const regex = { $regex: req.query.keyword.trim(), $options: 'i' };
+    filter.$or = [
+      { name: regex },
+      { brand: regex },
+      { category: regex },
+      { description: regex },
+    ];
+  }
+
+  if (req.query.category) {
+    filter.category = req.query.category;
+  }
+
+  const minPrice = Number(req.query.minPrice);
+  const maxPrice = Number(req.query.maxPrice);
+  if (minPrice > 0 || maxPrice > 0) {
+    filter.price = {};
+    if (minPrice > 0) filter.price.$gte = minPrice;
+    if (maxPrice > 0) filter.price.$lte = maxPrice;
+  }
+
+  const minRating = Number(req.query.minRating);
+  if (minRating > 0) {
+    filter.rating = { $gte: minRating };
+  }
+
+  // Default keeps the curated seed order
+  const sortMap = {
+    price_asc: { price: 1 },
+    price_desc: { price: -1 },
+    rating: { rating: -1, numReviews: -1 },
+    newest: { createdAt: -1 },
+  };
+  const sortBy = sortMap[req.query.sort] || { _id: 1 };
+
+  const count = await Product.countDocuments(filter);
+  const products = await Product.find(filter)
+    .sort(sortBy)
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
+});
+
+// @desc    List distinct product categories
+// @route   GET /api/products/categories
+// @access  Public
+const getCategories = asyncHandler(async (req, res) => {
+  const categories = await Product.distinct('category');
+  res.json(categories.sort());
 });
 
 // @desc    Fetch single product
@@ -47,16 +86,24 @@ const getProductById = asyncHandler(async (req, res) => {
 // @route   POST /api/products
 // @access  Private/Admin
 const createProduct = asyncHandler(async (req, res) => {
+  const { name, price, description, image, brand, category, countInStock } =
+    req.body;
+
+  if (!name || !description || !brand || !category) {
+    res.status(400);
+    throw new Error('Name, description, craft house and category are required');
+  }
+
   const product = new Product({
-    name: 'Sample name',
-    price: 0,
+    name,
+    price: Number(price) || 0,
     user: req.user._id,
-    image: '/images/sample.jpg',
-    brand: 'Sample brand',
-    category: 'Sample category',
-    countInStock: 0,
+    image: image || '/images/placeholder.svg',
+    brand,
+    category,
+    countInStock: Number(countInStock) || 0,
     numReviews: 0,
-    description: 'Sample description',
+    description,
   });
 
   const createdProduct = await product.save();
@@ -156,6 +203,7 @@ const getTopProducts = asyncHandler(async (req, res) => {
 
 export {
   getProducts,
+  getCategories,
   getProductById,
   createProduct,
   updateProduct,

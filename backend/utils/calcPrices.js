@@ -2,26 +2,24 @@ function addDecimals(num) {
   return (Math.round(num * 100) / 100).toFixed(2);
 }
 
-// NOTE: the code below has been changed from the course code to fix an issue
-// with type coercion of strings to numbers.
-// Our addDecimals function expects a number and returns a string, so it is not
-// correct to call it passing a string as the argument.
+// Pricing rules (must stay in sync with frontend/src/utils/cartUtils.js):
+// - free shipping on orders over ₹2,000, otherwise flat ₹99
+// - 5% GST on the items subtotal
+export const FREE_SHIPPING_THRESHOLD = 2000;
+export const SHIPPING_FLAT_RATE = 99;
+export const GST_RATE = 0.05;
 
 export function calcPrices(orderItems) {
-  // Calculate the items price in whole number (pennies) to avoid issues with
-  // floating point number calculations
-  const itemsPrice = orderItems.reduce(
-    (acc, item) => acc + (item.price * 100 * item.qty) / 100,
-    0
-  );
+  // Work in paise to avoid floating point drift
+  const itemsPrice =
+    orderItems.reduce((acc, item) => acc + item.price * 100 * item.qty, 0) /
+    100;
 
-  // Calculate the shipping price
-  const shippingPrice = itemsPrice > 100 ? 0 : 10;
+  const shippingPrice =
+    itemsPrice > FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FLAT_RATE;
 
-  // Calculate the tax price
-  const taxPrice = 0.15 * itemsPrice;
+  const taxPrice = Math.round(GST_RATE * itemsPrice * 100) / 100;
 
-  // Calculate the total price
   const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
   // return prices as strings fixed to 2 decimal places

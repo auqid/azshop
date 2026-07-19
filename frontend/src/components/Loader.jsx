@@ -1,22 +1,9 @@
-import { Spinner } from "react-bootstrap";
+const Loader = ({ small = false }) => (
+  <div
+    className={small ? 'loader loader--inline' : 'loader'}
+    role='status'
+    aria-label='Loading'
+  ></div>
+);
 
-import React from 'react'
-
-const Loader = () => {
-  return (
-    <div>
-      <Spinner
-      animation="border"
-      role="status"
-      style={{
-        width:'100px',
-        height:'100px',
-        margin:"auto",
-        display:'block',
-      }}
-      ></Spinner>
-    </div>
-  )
-}
-
-export default Loader
+export default Loader;

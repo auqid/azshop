@@ -1,19 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-const Meta = ({ title, description, keywords }) => {
+const Meta = ({
+  title = 'Nargis — Handcrafted in Kashmir',
+  description = 'Pashmina, saffron, walnut wood and papier-mâché, handcrafted in the Kashmir Valley and shipped across India.',
+  keywords = 'kashmir, pashmina, saffron, kahwa, walnut wood, papier-mache, handicrafts',
+}) => {
   return (
     <Helmet>
       <title>{title}</title>
       <meta name='description' content={description} />
-      <meta name='keyword' content={keywords} />
+      <meta name='keywords' content={keywords} />
     </Helmet>
   );
-};
-
-Meta.defaultProps = {
-  title: 'Welcome To A-Z Shop',
-  description: 'We sell the best products for cheap',
-  keywords: 'electronics, buy electronics, cheap electroincs',
 };
 
 export default Meta;
