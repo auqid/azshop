@@ -88,6 +88,189 @@
   color: var(--rogan);
 }
 
+/* product card media, tags and quick actions */
+
+.product-card__media {
+  position: relative;
+}
+
+.tag {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 2;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(43, 32, 19, 0.2);
+}
+
+.tag--low {
+  background: var(--saffron);
+  color: #fff;
+}
+
+.tag--out {
+  background: var(--rogan);
+  color: #fff;
+}
+
+.tag--top {
+  background: var(--deodar);
+  color: var(--gold);
+}
+
+.save-btn {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  z-index: 2;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.92);
+  color: var(--reed);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(43, 32, 19, 0.22);
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.save-btn:hover {
+  transform: scale(1.09);
+  color: var(--rogan);
+}
+
+.save-btn.is-saved {
+  color: var(--rogan);
+}
+
+.product-card__foot {
+  margin-top: auto;
+  padding-top: 0.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.quick-add {
+  flex-shrink: 0;
+}
+
+.btn.is-saved {
+  border-color: var(--rogan);
+  color: var(--rogan);
+}
+
+/* ---------- skeletons ---------- */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--line-soft) 25%,
+    #f6f0e2 37%,
+    var(--line-soft) 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-sweep 1.4s ease infinite;
+  border-radius: var(--radius-s);
+}
+
+.skeleton__media {
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+}
+
+.skeleton__line {
+  height: 0.72rem;
+  margin-bottom: 0.55rem;
+}
+
+.skeleton__line--short {
+  width: 45%;
+}
+
+.skeleton__line--mid {
+  width: 70%;
+}
+
+.skeleton-card:hover {
+  transform: none;
+  box-shadow: var(--shadow-card);
+}
+
+@keyframes skeleton-sweep {
+  from {
+    background-position: 100% 50%;
+  }
+  to {
+    background-position: 0 50%;
+  }
+}
+
+/* ---------- breadcrumbs ---------- */
+
+.breadcrumbs {
+  margin-bottom: 1.25rem;
+}
+
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.85rem;
+  color: var(--reed);
+}
+
+.breadcrumbs li + li::before {
+  content: '/';
+  margin-right: 0.4rem;
+  color: var(--line);
+}
+
+.breadcrumbs a {
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.breadcrumbs a:hover {
+  color: var(--saffron-deep);
+}
+
+/* ---------- empty states ---------- */
+
+.empty-state {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background: var(--card);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-l);
+}
+
+.empty-state__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.empty-state__copy {
+  color: var(--reed);
+  margin-bottom: 1.5rem;
+}
+
 /* ---------- rating ---------- */
 
 .rating {
@@ -625,6 +808,61 @@ select.field__input {
   opacity: 0.45;
   pointer-events: none;
   transition: opacity 0.15s ease;
+}
+
+/* ---------- admin toolbar ---------- */
+
+.admin-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.admin-toolbar__search {
+  flex: 1 1 240px;
+  max-width: 360px;
+  padding: 0.45rem 0.8rem;
+}
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  background: var(--card);
+}
+
+.segmented__btn {
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding: 0.45rem 0.85rem;
+  cursor: pointer;
+  border-right: 1px solid var(--line-soft);
+}
+
+.segmented__btn:last-child {
+  border-right: none;
+}
+
+.segmented__btn:hover {
+  background: var(--line-soft);
+}
+
+.segmented__btn.is-active {
+  background: var(--deodar);
+  color: var(--ivory);
+}
+
+.result-count {
+  font-size: 0.85rem;
+  color: var(--reed);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---------- admin dashboard ---------- */

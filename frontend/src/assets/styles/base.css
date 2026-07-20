@@ -131,6 +131,23 @@ a:hover {
   padding-block: 2rem 3.5rem;
 }
 
+/* Anchor targets sit under the sticky header unless we reserve room for it,
+   which would hide the category chips when jumping to #crafts. */
+#crafts,
+#reviews,
+#main-content {
+  scroll-margin-top: 4.5rem;
+}
+
+/* the header stacks brand + search on small screens, so it needs more room */
+@media (max-width: 720px) {
+  #crafts,
+  #reviews,
+  #main-content {
+    scroll-margin-top: 8.75rem;
+  }
+}
+
 @media (max-width: 640px) {
   .container {
     width: calc(100% - 2rem);
