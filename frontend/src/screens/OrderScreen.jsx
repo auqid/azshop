@@ -15,7 +15,7 @@ import {
 } from '../slices/ordersApiSlice';
 import OrderLineItem from '../components/OrderLineItem';
 import OrderSummary from '../components/OrderSummary';
-import { formatDate } from '../utils/formatters';
+import OrderTimeline from '../components/OrderTimeline';
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -126,6 +126,11 @@ const OrderScreen = () => {
       <div className='checkout-grid'>
         <div className='panel'>
           <div className='panel__section'>
+            <h2>Progress</h2>
+            <OrderTimeline order={order} />
+          </div>
+
+          <div className='panel__section'>
             <h2>Shipping</h2>
             <p style={{ margin: '0 0 0.35rem' }}>
               <strong>{order.user.name}</strong> ·{' '}
@@ -136,29 +141,12 @@ const OrderScreen = () => {
               {order.shippingAddress.postalCode},{' '}
               {order.shippingAddress.country}
             </p>
-            {order.isDelivered ? (
-              <Message variant='success'>
-                Delivered on {formatDate(order.deliveredAt)}
-              </Message>
-            ) : (
-              <Message>Not yet delivered</Message>
-            )}
           </div>
 
+          {/* Paid/delivered status lives in the timeline above */}
           <div className='panel__section'>
             <h2>Payment</h2>
             <p style={{ margin: 0 }}>{order.paymentMethod}</p>
-            {order.isPaid ? (
-              <Message variant='success'>
-                Paid on {formatDate(order.paidAt)}
-              </Message>
-            ) : (
-              <Message>
-                {order.paymentMethod === 'Cash on Delivery'
-                  ? 'Payment will be collected when the order arrives.'
-                  : 'Not yet paid'}
-              </Message>
-            )}
           </div>
 
           <div className='panel__section'>

@@ -1,4 +1,4 @@
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,22 +14,28 @@ const Footer = () => {
           </p>
         </div>
         <div className='site-footer__meta'>
-          <p style={{ margin: 0 }}>
-            A portfolio project by{' '}
+          <p style={{ margin: 0 }}>A portfolio project by Auqid Irfan</p>
+          <p className='site-footer__links'>
+            <a
+              href='https://www.linkedin.com/in/auqidirfan/'
+              target='_blank'
+              rel='noreferrer'
+            >
+              <FaLinkedin aria-hidden='true' /> LinkedIn
+            </a>
             <a
               href='https://github.com/auqid'
               target='_blank'
               rel='noreferrer'
             >
-              <FaGithub aria-hidden='true' /> auqid
-            </a>{' '}
-            ·{' '}
+              <FaGithub aria-hidden='true' /> GitHub
+            </a>
             <a
               href='https://github.com/auqid/azshop'
               target='_blank'
               rel='noreferrer'
             >
-              source code
+              Source code
             </a>
           </p>
           <p style={{ margin: '0.25rem 0 0' }}>

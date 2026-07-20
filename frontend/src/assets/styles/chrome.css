@@ -465,6 +465,20 @@
   white-space: nowrap;
 }
 
+.site-footer__links {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin: 0.4rem 0 0;
+}
+
+.site-footer__links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .site-footer__meta svg {
   vertical-align: -2px;
   margin-right: 0.2rem;
@@ -473,5 +487,9 @@
 @media (max-width: 640px) {
   .site-footer__meta {
     text-align: left;
+  }
+
+  .site-footer__links {
+    justify-content: flex-start;
   }
 }

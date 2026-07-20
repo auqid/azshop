@@ -9,11 +9,9 @@ const SearchBox = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (keyword.trim()) {
-      navigate(`/search/${keyword.trim()}`);
-    } else {
-      navigate('/');
-    }
+    // An empty search still opens the results page, listing everything —
+    // more useful than silently doing nothing.
+    navigate(keyword.trim() ? `/search/${keyword.trim()}` : '/search');
   };
 
   return (
