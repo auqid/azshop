@@ -47,6 +47,10 @@ const ProductEditScreen = () => {
 
   const navigate = useNavigate();
 
+  // Fill the form once the record arrives from the API. setState-in-effect is
+  // the pragmatic option here: the data is async and the fields stay editable
+  // afterwards, so it can't be derived during render.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (product) {
       setName(product.name);
@@ -58,6 +62,7 @@ const ProductEditScreen = () => {
       setDescription(product.description);
     }
   }, [product]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const submitHandler = async (e) => {
     e.preventDefault();

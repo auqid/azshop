@@ -21,6 +21,8 @@ Deployed live at [https://azshop.onrender.com/](https://azshop.onrender.com/)
 
 - **Frontend:** React 18 + Vite, Redux Toolkit (RTK Query), React Router 6, custom CSS
 - **Backend:** Express 4, Mongoose 8, JWT auth (httpOnly cookie), Multer uploads
+- **Hardening:** Helmet headers, gzip compression, rate limiting (strict on auth routes), 8-character minimum passwords, admin-only uploads capped at 5 MB
+- **Quality:** Vitest unit tests over the pricing and formatting logic, ESLint (flat config) and Prettier
 
 ## Getting started
 
@@ -45,6 +47,9 @@ Seeded logins (password `123456` for all): `admin@email.com` (admin), `aarav@ema
 | `npm run build` | Install everything and build the frontend to `frontend/dist` |
 | `npm start` | Serve the API (and the built frontend when `NODE_ENV=production`) |
 | `npm run data:import` / `data:destroy` | Seed / wipe the database |
+| `npm test` | Run the unit tests (`npm run test:watch` to watch) |
+| `npm run lint` | Lint backend and frontend |
+| `npm run format` | Format with Prettier (`format:check` to verify only) |
 
 ## Deploying on Render
 

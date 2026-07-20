@@ -14,6 +14,11 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder.js",
     "data:destroy": "node backend/seeder.js -d",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.{js,jsx,css,md,json}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,css,md,json}\"",
     "build": "npm install && npm install --include=dev --prefix frontend && npm run build --prefix frontend"
   },
   "author": "auqid",
@@ -21,15 +26,27 @@
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "colors": "^1.4.0",
+    "compression": "^1.8.1",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
     "express": "^4.22.2",
+    "express-rate-limit": "^8.6.0",
+    "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^8.24.1",
     "multer": "^2.2.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
     "concurrently": "^10.0.3",
-    "nodemon": "^3.1.14"
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.7.0",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.9.5",
+    "supertest": "^7.2.2",
+    "vitest": "^4.1.10"
   }
 }

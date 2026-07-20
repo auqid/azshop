@@ -7,7 +7,13 @@ const OrderLineItem = ({ item }) => {
 
   return (
     <div className='line-item'>
-      <img src={item.image} alt={item.name} className='line-item__thumb' />
+      <img
+        src={item.image}
+        alt={item.name}
+        className='line-item__thumb'
+        loading='lazy'
+        decoding='async'
+      />
       <div>
         <Link to={`/product/${productId}`} className='line-item__name'>
           {item.name}

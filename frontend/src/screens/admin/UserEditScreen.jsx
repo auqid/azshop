@@ -28,6 +28,9 @@ const UserEditScreen = () => {
 
   const navigate = useNavigate();
 
+  // Fill the form once the record arrives from the API — see the note in
+  // ProductEditScreen for why this stays an effect.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (user) {
       setName(user.name);
@@ -35,6 +38,7 @@ const UserEditScreen = () => {
       setIsAdmin(user.isAdmin);
     }
   }, [user]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const submitHandler = async (e) => {
     e.preventDefault();
