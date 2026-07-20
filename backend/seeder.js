@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import colors from 'colors';
+import 'colors'; // extends String.prototype with the colour helpers used below
 import users from './data/users.js';
 import products from './data/products.js';
 import reviewsByProduct from './data/reviews.js';

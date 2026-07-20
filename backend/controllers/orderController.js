@@ -42,6 +42,33 @@ const addOrderItems = asyncHandler(async (req, res) => {
     const { itemsPrice, taxPrice, shippingPrice, totalPrice } =
       calcPrices(dbOrderItems);
 
+    // Reserve stock before saving the order. Each update only succeeds while
+    // enough stock remains, so two shoppers can't buy the same last item; if
+    // any item runs out we put back what we already took and fail the order.
+    const reserved = [];
+    for (const item of dbOrderItems) {
+      const updated = await Product.findOneAndUpdate(
+        { _id: item.product, countInStock: { $gte: item.qty } },
+        { $inc: { countInStock: -item.qty } },
+        { new: true }
+      );
+
+      if (!updated) {
+        await Promise.all(
+          reserved.map((r) =>
+            Product.updateOne(
+              { _id: r.product },
+              { $inc: { countInStock: r.qty } }
+            )
+          )
+        );
+        res.status(400);
+        throw new Error(`${item.name} is out of stock`);
+      }
+
+      reserved.push(item);
+    }
+
     const order = new Order({
       orderItems: dbOrderItems,
       user: req.user._id,
@@ -53,9 +80,18 @@ const addOrderItems = asyncHandler(async (req, res) => {
       totalPrice,
     });
 
-    const createdOrder = await order.save();
-
-    res.status(201).json(createdOrder);
+    try {
+      const createdOrder = await order.save();
+      res.status(201).json(createdOrder);
+    } catch (err) {
+      // Saving failed after stock was taken — release it again
+      await Promise.all(
+        reserved.map((r) =>
+          Product.updateOne({ _id: r.product }, { $inc: { countInStock: r.qty } })
+        )
+      );
+      throw err;
+    }
   }
 });
 

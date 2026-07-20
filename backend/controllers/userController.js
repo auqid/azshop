@@ -2,6 +2,8 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import generateToken from '../utils/generateToken.js';
 import User from '../models/userModel.js';
 
+const MIN_PASSWORD_LENGTH = 8;
+
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
 // @access  Public
@@ -30,6 +32,18 @@ const authUser = asyncHandler(async (req, res) => {
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    res.status(400);
+    throw new Error('Name, email and password are required');
+  }
+
+  if (password.length < MIN_PASSWORD_LENGTH) {
+    res.status(400);
+    throw new Error(
+      `Password must be at least ${MIN_PASSWORD_LENGTH} characters`
+    );
+  }
 
   const userExists = await User.findOne({ email });
 
@@ -97,6 +111,12 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.email = req.body.email || user.email;
 
     if (req.body.password) {
+      if (req.body.password.length < MIN_PASSWORD_LENGTH) {
+        res.status(400);
+        throw new Error(
+          `Password must be at least ${MIN_PASSWORD_LENGTH} characters`
+        );
+      }
       user.password = req.body.password;
     }
 
@@ -118,7 +138,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({}).select('-password');
   res.json(users);
 });
 

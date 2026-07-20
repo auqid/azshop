@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaTimes } from 'react-icons/fa';
@@ -12,22 +12,19 @@ import { setCredentials } from '../slices/authSlice';
 import { formatINR, formatDate } from '../utils/formatters';
 
 const ProfileScreen = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const { userInfo } = useSelector((state) => state.auth);
+
+  // userInfo is already in the store, so seed the form directly rather than
+  // rendering empty inputs and filling them in an effect.
+  const [name, setName] = useState(userInfo.name);
+  const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  const { userInfo } = useSelector((state) => state.auth);
 
   const { data: orders, isLoading, error } = useGetMyOrdersQuery();
 
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation();
-
-  useEffect(() => {
-    setName(userInfo.name);
-    setEmail(userInfo.email);
-  }, [userInfo.email, userInfo.name]);
 
   const dispatch = useDispatch();
 

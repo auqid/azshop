@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaSlidersH, FaChevronDown } from 'react-icons/fa';
 
 const SORT_OPTIONS = [
@@ -17,8 +17,18 @@ const FilterBar = ({ sort, minPrice, maxPrice, minRating, onChange }) => {
   // mobile-only disclosure; the panel is always visible on wider screens
   const [open, setOpen] = useState(false);
 
-  useEffect(() => setMin(minPrice), [minPrice]);
-  useEffect(() => setMax(maxPrice), [maxPrice]);
+  // The price boxes are typed into locally but owned by the URL. When the URL
+  // changes (Clear, back button), re-sync during render — the React-recommended
+  // alternative to syncing props into state from an effect.
+  const [syncedPrices, setSyncedPrices] = useState({ minPrice, maxPrice });
+  if (
+    syncedPrices.minPrice !== minPrice ||
+    syncedPrices.maxPrice !== maxPrice
+  ) {
+    setSyncedPrices({ minPrice, maxPrice });
+    setMin(minPrice);
+    setMax(maxPrice);
+  }
 
   const submitPrices = (e) => {
     e.preventDefault();

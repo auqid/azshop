@@ -317,6 +317,19 @@ a.step__label:hover {
   color: var(--ink-soft);
 }
 
+/* ---------- not found / error ---------- */
+
+.not-found {
+  max-width: 520px;
+  text-align: center;
+  padding-block: 5rem;
+}
+
+.not-found__copy {
+  color: var(--ink-soft);
+  margin-bottom: 1.75rem;
+}
+
 /* ---------- misc ---------- */
 
 .mono-id {

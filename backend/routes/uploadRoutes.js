@@ -1,8 +1,12 @@
 import path from 'path';
 import express from 'express';
 import multer from 'multer';
+import { protect, admin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
+
+// 5 MB ceiling so a large upload can't exhaust the disk
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -30,13 +34,22 @@ function fileFilter(req, file, cb) {
   }
 }
 
-const upload = multer({ storage, fileFilter });
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: MAX_UPLOAD_BYTES },
+});
 const uploadSingleImage = upload.single('image');
 
-router.post('/', (req, res) => {
+// Admin only — an open upload endpoint lets anyone write files to the server.
+router.post('/', protect, admin, (req, res) => {
   uploadSingleImage(req, res, function (err) {
     if (err) {
       return res.status(400).send({ message: err.message });
+    }
+
+    if (!req.file) {
+      return res.status(400).send({ message: 'No image supplied' });
     }
 
     res.status(200).send({

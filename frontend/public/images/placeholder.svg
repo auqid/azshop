@@ -7,8 +7,8 @@
     </pattern>
   </defs>
   <rect width="800" height="600" fill="url(#weave)"/>
-  <g transform="translate(400 275) scale(4.5)" opacity="0.35">
-    <path d="M0 -21C4 -14 12 -16 16 -10 12 -8 10 -8 7 -9c3 4 9 4 12 10 -5 2 -9 0 -12 -2 2 4 6 5 7 11 -5 -1 -8 -4 -10 -8L2 14h-4l2 -12c-2 4 -5 7 -10 8 1 -6 5 -7 7 -11 -3 2 -7 4 -12 2 3 -6 9 -6 12 -10 -3 1 -5 1 -9 -1 4 -6 12 -4 16 -11z" fill="#857762"/>
+  <g transform="translate(400 275) scale(2.5)" opacity="0.35">
+    <path d="M0 -33 Q5 -20 12 -13 Q19 -19 25 -16 Q19 -6 17 -1 Q25 0 31 6 Q20 9 12 12 L5 16 L3 30 L-3 30 L-5 16 L-12 12 Q-20 9 -31 6 Q-25 0 -17 -1 Q-19 -6 -25 -16 Q-19 -19 -12 -13 Q-5 -20 0 -33 Z" fill="#857762"/>
   </g>
   <text x="400" y="415" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="4" fill="#857762" text-anchor="middle">PHOTO COMING SOON</text>
   <rect x="18" y="18" width="764" height="564" fill="none" stroke="rgba(43,32,19,0.18)" stroke-width="1.5"/>

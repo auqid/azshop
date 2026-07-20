@@ -70,6 +70,13 @@ const productSchema = mongoose.Schema(
   }
 );
 
+// Indexes for the listing screens: category chips, price/rating sorting, and
+// the keyword search that scans name/brand/description.
+productSchema.index({ category: 1 });
+productSchema.index({ price: 1 });
+productSchema.index({ rating: -1 });
+productSchema.index({ name: 'text', brand: 'text', description: 'text' });
+
 const Product = mongoose.model('Product', productSchema);
 
 export default Product;

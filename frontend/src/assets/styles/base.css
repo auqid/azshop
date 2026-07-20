@@ -70,6 +70,31 @@ a:hover {
   border-radius: 2px;
 }
 
+/* keyboard users can jump past the header */
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -120%);
+  z-index: 100;
+  background: var(--saffron);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0 0 var(--radius-s) var(--radius-s);
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus {
+  transform: translate(-50%, 0);
+  text-decoration: none;
+}
+
+.site-main:focus {
+  outline: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

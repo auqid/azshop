@@ -6,7 +6,14 @@ const Product = ({ product }) => {
   return (
     <article className='product-card'>
       <Link to={`/product/${product._id}`} className='product-card__image'>
-        <img src={product.image} alt={product.name} />
+        <img
+          src={product.image}
+          alt={product.name}
+          loading='lazy'
+          decoding='async'
+          width='800'
+          height='600'
+        />
       </Link>
 
       <div className='product-card__body'>
