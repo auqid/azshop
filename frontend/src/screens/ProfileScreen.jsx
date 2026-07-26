@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaCheck } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -52,15 +52,7 @@ const ProfileScreen = () => {
       <Meta title='Your account — Nargis' />
       <h1>Your account</h1>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(260px, 340px) 1fr',
-          gap: '2rem',
-          alignItems: 'start',
-        }}
-        className='profile-grid'
-      >
+      <div className='profile-grid'>
         <div className='form-card'>
           <h2>Details</h2>
 
@@ -141,58 +133,113 @@ const ProfileScreen = () => {
               No orders yet. <Link to='/'>Browse the crafts.</Link>
             </Message>
           ) : (
-            <div className='table-wrap'>
-              <table className='table'>
-                <thead>
-                  <tr>
-                    <th>Order</th>
-                    <th>Date</th>
-                    <th>Total</th>
-                    <th>Paid</th>
-                    <th>Delivered</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map((order) => (
-                    <tr key={order._id}>
-                      <td className='cell-mono'>{order._id}</td>
-                      <td>{formatDate(order.createdAt)}</td>
-                      <td>{formatINR(order.totalPrice)}</td>
-                      <td>
-                        {order.isPaid ? (
-                          <span className='cell-ok'>
-                            {formatDate(order.paidAt)}
-                          </span>
-                        ) : (
-                          <FaTimes className='cell-no' aria-label='Not paid' />
-                        )}
-                      </td>
-                      <td>
-                        {order.isDelivered ? (
-                          <span className='cell-ok'>
-                            {formatDate(order.deliveredAt)}
-                          </span>
-                        ) : (
-                          <FaTimes
-                            className='cell-no'
-                            aria-label='Not delivered'
-                          />
-                        )}
-                      </td>
-                      <td>
-                        <Link
-                          to={`/order/${order._id}`}
-                          className='btn btn--ghost btn--sm'
-                        >
-                          Details
-                        </Link>
-                      </td>
+            <>
+              {/* Desktop Table View */}
+              <div className='table-wrap profile-orders__desktop'>
+                <table className='table'>
+                  <thead>
+                    <tr>
+                      <th>Order</th>
+                      <th>Date</th>
+                      <th>Total</th>
+                      <th>Paid</th>
+                      <th>Delivered</th>
+                      <th></th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {orders.map((order) => (
+                      <tr key={order._id}>
+                        <td className='cell-mono'>{order._id}</td>
+                        <td>{formatDate(order.createdAt)}</td>
+                        <td>{formatINR(order.totalPrice)}</td>
+                        <td>
+                          {order.isPaid ? (
+                            <span className='cell-ok'>
+                              {formatDate(order.paidAt)}
+                            </span>
+                          ) : (
+                            <FaTimes
+                              className='cell-no'
+                              aria-label='Not paid'
+                            />
+                          )}
+                        </td>
+                        <td>
+                          {order.isDelivered ? (
+                            <span className='cell-ok'>
+                              {formatDate(order.deliveredAt)}
+                            </span>
+                          ) : (
+                            <FaTimes
+                              className='cell-no'
+                              aria-label='Not delivered'
+                            />
+                          )}
+                        </td>
+                        <td>
+                          <Link
+                            to={`/order/${order._id}`}
+                            className='btn btn--ghost btn--sm'
+                          >
+                            Details
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Order Cards View */}
+              <div className='profile-orders__mobile'>
+                {orders.map((order) => (
+                  <div key={order._id} className='order-card-mobile'>
+                    <div className='order-card-mobile__header'>
+                      <span className='cell-mono'>
+                        ID: #{order._id.slice(-8)}
+                      </span>
+                      <span className='order-card-mobile__date'>
+                        {formatDate(order.createdAt)}
+                      </span>
+                    </div>
+                    <div className='order-card-mobile__body'>
+                      <div className='order-card-mobile__total'>
+                        {formatINR(order.totalPrice)}
+                      </div>
+                      <div className='order-card-mobile__badges'>
+                        {order.isPaid ? (
+                          <span
+                            className='badge badge--ok'
+                            title={`Paid on ${formatDate(order.paidAt)}`}
+                          >
+                            <FaCheck size={10} /> Paid
+                          </span>
+                        ) : (
+                          <span className='badge badge--warn'>Unpaid</span>
+                        )}
+                        {order.isDelivered ? (
+                          <span
+                            className='badge badge--ok'
+                            title={`Delivered on ${formatDate(order.deliveredAt)}`}
+                          >
+                            <FaCheck size={10} /> Delivered
+                          </span>
+                        ) : (
+                          <span className='badge badge--no'>Pending</span>
+                        )}
+                      </div>
+                    </div>
+                    <Link
+                      to={`/order/${order._id}`}
+                      className='btn btn--ghost btn--sm btn--block'
+                    >
+                      View details
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </div>
