@@ -74,26 +74,77 @@ const DashboardScreen = () => {
           {summary.recentOrders.length === 0 ? (
             <Message>No orders yet.</Message>
           ) : (
-            <div className='table-wrap'>
-              <table className='table'>
-                <thead>
-                  <tr>
-                    <th>Order</th>
-                    <th>Customer</th>
-                    <th>Date</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {summary.recentOrders.map((order) => (
-                    <tr key={order._id}>
-                      <td className='cell-mono'>{order._id.slice(-8)}</td>
-                      <td>{order.user && order.user.name}</td>
-                      <td>{formatDate(order.createdAt)}</td>
-                      <td>{formatINR(order.totalPrice)}</td>
-                      <td>
+            <>
+              {/* Desktop Recent Orders Table */}
+              <div className='table-wrap admin-orders__desktop'>
+                <table className='table'>
+                  <thead>
+                    <tr>
+                      <th>Order</th>
+                      <th>Customer</th>
+                      <th>Date</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {summary.recentOrders.map((order) => (
+                      <tr key={order._id}>
+                        <td className='cell-mono'>{order._id.slice(-8)}</td>
+                        <td>{order.user && order.user.name}</td>
+                        <td>{formatDate(order.createdAt)}</td>
+                        <td>{formatINR(order.totalPrice)}</td>
+                        <td>
+                          {order.isDelivered ? (
+                            <span className='badge badge--ok'>Delivered</span>
+                          ) : order.isPaid ? (
+                            <span className='badge badge--ok'>Paid</span>
+                          ) : order.paymentMethod === 'Cash on Delivery' ? (
+                            <span className='badge badge--warn'>
+                              COD pending
+                            </span>
+                          ) : (
+                            <span className='badge badge--no'>Unpaid</span>
+                          )}
+                        </td>
+                        <td>
+                          <Link
+                            to={`/order/${order._id}`}
+                            className='btn btn--ghost btn--sm'
+                          >
+                            Details
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Recent Orders Cards */}
+              <div className='admin-orders__mobile'>
+                {summary.recentOrders.map((order) => (
+                  <div key={order._id} className='admin-card-mobile'>
+                    <div className='admin-card-mobile__header'>
+                      <div>
+                        <span className='cell-mono'>
+                          ID: #{order._id.slice(-8)}
+                        </span>
+                        <div style={{ fontWeight: 700, marginTop: '0.2rem' }}>
+                          {order.user?.name || 'Customer'}
+                        </div>
+                      </div>
+                      <span className='order-card-mobile__date'>
+                        {formatDate(order.createdAt)}
+                      </span>
+                    </div>
+
+                    <div className='admin-card-mobile__body'>
+                      <div className='admin-card-mobile__price'>
+                        {formatINR(order.totalPrice)}
+                      </div>
+                      <div>
                         {order.isDelivered ? (
                           <span className='badge badge--ok'>Delivered</span>
                         ) : order.isPaid ? (
@@ -103,20 +154,19 @@ const DashboardScreen = () => {
                         ) : (
                           <span className='badge badge--no'>Unpaid</span>
                         )}
-                      </td>
-                      <td>
-                        <Link
-                          to={`/order/${order._id}`}
-                          className='btn btn--ghost btn--sm'
-                        >
-                          Details
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                      </div>
+                    </div>
+
+                    <Link
+                      to={`/order/${order._id}`}
+                      className='btn btn--ghost btn--sm btn--block'
+                    >
+                      Details
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </>
       )}

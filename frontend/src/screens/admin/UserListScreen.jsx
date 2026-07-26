@@ -37,58 +37,107 @@ const UserListScreen = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <div className='table-wrap'>
-          <table className='table'>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Admin</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user._id}>
-                  <td className='cell-mono'>{user._id}</td>
-                  <td>{user.name}</td>
-                  <td>
-                    <a href={`mailto:${user.email}`}>{user.email}</a>
-                  </td>
-                  <td>
-                    {user.isAdmin ? (
-                      <FaCheck className='cell-ok' aria-label='Admin' />
-                    ) : (
-                      <FaTimes className='cell-no' aria-label='Not admin' />
-                    )}
-                  </td>
-                  <td>
-                    {!user.isAdmin && (
-                      <div className='table__actions'>
-                        <Link
-                          to={`/admin/user/${user._id}/edit`}
-                          className='btn btn--ghost btn--sm btn--icon'
-                          aria-label={`Edit ${user.name}`}
-                        >
-                          <FaEdit />
-                        </Link>
-                        <button
-                          type='button'
-                          className='btn btn--danger btn--sm btn--icon'
-                          aria-label={`Delete ${user.name}`}
-                          onClick={() => deleteHandler(user._id)}
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
-                    )}
-                  </td>
+        <>
+          {/* Desktop Table View */}
+          <div className='table-wrap admin-users__desktop'>
+            <table className='table'>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Admin</th>
+                  <th></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user._id}>
+                    <td className='cell-mono'>{user._id}</td>
+                    <td>{user.name}</td>
+                    <td>
+                      <a href={`mailto:${user.email}`}>{user.email}</a>
+                    </td>
+                    <td>
+                      {user.isAdmin ? (
+                        <FaCheck className='cell-ok' aria-label='Admin' />
+                      ) : (
+                        <FaTimes className='cell-no' aria-label='Not admin' />
+                      )}
+                    </td>
+                    <td>
+                      {!user.isAdmin && (
+                        <div className='table__actions'>
+                          <Link
+                            to={`/admin/user/${user._id}/edit`}
+                            className='btn btn--ghost btn--sm btn--icon'
+                            aria-label={`Edit ${user.name}`}
+                          >
+                            <FaEdit />
+                          </Link>
+                          <button
+                            type='button'
+                            className='btn btn--danger btn--sm btn--icon'
+                            aria-label={`Delete ${user.name}`}
+                            onClick={() => deleteHandler(user._id)}
+                          >
+                            <FaTrash />
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Admin User Cards View */}
+          <div className='admin-users__mobile'>
+            {users.map((user) => (
+              <div key={user._id} className='admin-card-mobile'>
+                <div className='admin-card-mobile__header'>
+                  <div>
+                    <div style={{ fontWeight: 700 }}>{user.name}</div>
+                    <div className='cell-mono'>ID: #{user._id.slice(-8)}</div>
+                  </div>
+                  <div>
+                    {user.isAdmin ? (
+                      <span className='badge badge--ok'>Admin</span>
+                    ) : (
+                      <span className='badge badge--warn'>Customer</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className='admin-card-mobile__meta'>
+                  <div>
+                    <span className='admin-card-mobile__label'>Email:</span>{' '}
+                    <a href={`mailto:${user.email}`}>{user.email}</a>
+                  </div>
+                </div>
+
+                {!user.isAdmin && (
+                  <div className='admin-card-mobile__actions'>
+                    <Link
+                      to={`/admin/user/${user._id}/edit`}
+                      className='btn btn--ghost btn--sm'
+                    >
+                      <FaEdit /> Edit
+                    </Link>
+                    <button
+                      type='button'
+                      className='btn btn--danger btn--sm'
+                      onClick={() => deleteHandler(user._id)}
+                    >
+                      <FaTrash /> Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
