@@ -52,20 +52,20 @@ const HomeScreen = () => {
     const base = keyword
       ? `/search/${keyword}`
       : isSearch
-      ? '/search'
-      : category
-      ? `/category/${encodeURIComponent(category)}`
-      : '/';
+        ? '/search'
+        : category
+          ? `/category/${encodeURIComponent(category)}`
+          : '/';
     navigate({ pathname: base, search: params.toString() }, { replace: true });
   };
 
   const heading = keyword
     ? `Results for “${keyword}”`
     : category
-    ? category
-    : isSearch
-    ? 'Everything we make'
-    : 'The crafts';
+      ? category
+      : isSearch
+        ? 'Everything we make'
+        : 'The crafts';
 
   return (
     <>

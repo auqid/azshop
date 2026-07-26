@@ -39,17 +39,17 @@ Seeded logins (password `123456` for all): `admin@email.com` (admin), `aarav@ema
 
 ## Scripts
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Run backend + frontend together |
-| `npm run server` | Backend only (nodemon) |
-| `npm run client` | Frontend only (Vite) |
-| `npm run build` | Install everything and build the frontend to `frontend/dist` |
-| `npm start` | Serve the API (and the built frontend when `NODE_ENV=production`) |
-| `npm run data:import` / `data:destroy` | Seed / wipe the database |
-| `npm test` | Run the unit tests (`npm run test:watch` to watch) |
-| `npm run lint` | Lint backend and frontend |
-| `npm run format` | Format with Prettier (`format:check` to verify only) |
+| Command                                | What it does                                                      |
+| -------------------------------------- | ----------------------------------------------------------------- |
+| `npm run dev`                          | Run backend + frontend together                                   |
+| `npm run server`                       | Backend only (nodemon)                                            |
+| `npm run client`                       | Frontend only (Vite)                                              |
+| `npm run build`                        | Install everything and build the frontend to `frontend/dist`      |
+| `npm start`                            | Serve the API (and the built frontend when `NODE_ENV=production`) |
+| `npm run data:import` / `data:destroy` | Seed / wipe the database                                          |
+| `npm test`                             | Run the unit tests (`npm run test:watch` to watch)                |
+| `npm run lint`                         | Lint backend and frontend                                         |
+| `npm run format`                       | Format with Prettier (`format:check` to verify only)              |
 
 ## Deploying on Render
 

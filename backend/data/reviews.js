@@ -37,7 +37,8 @@ const reviews = {
     {
       user: 'Aarav Mehta',
       rating: 4,
-      comment: 'Gifted it to my wife — she has not taken it off since. Packaging could be nicer for the price.',
+      comment:
+        'Gifted it to my wife — she has not taken it off since. Packaging could be nicer for the price.',
     },
   ],
   'Kashmiri Saffron — Mongra Grade, 2g': [
@@ -56,12 +57,14 @@ const reviews = {
     {
       user: 'Priya Nair',
       rating: 5,
-      comment: 'Used it for kheer during Onam visits — everyone asked where the saffron was from.',
+      comment:
+        'Used it for kheer during Onam visits — everyone asked where the saffron was from.',
     },
     {
       user: 'Arjun Sharma',
       rating: 4,
-      comment: 'Excellent quality, though 2g goes quickly once the family finds out you have it.',
+      comment:
+        'Excellent quality, though 2g goes quickly once the family finds out you have it.',
     },
   ],
   'Kahwa Blend Tin — Almond & Saffron, 150g': [
@@ -74,7 +77,8 @@ const reviews = {
     {
       user: 'Meera Pillai',
       rating: 4,
-      comment: 'Warming and fragrant. I brew it in a saucepan with a little honey — no samovar needed.',
+      comment:
+        'Warming and fragrant. I brew it in a saucepan with a little honey — no samovar needed.',
     },
     {
       user: 'Zara Khan',
@@ -92,12 +96,14 @@ const reviews = {
     {
       user: 'Priya Nair',
       rating: 4,
-      comment: 'Beautiful grain. Remember to oil them occasionally — the seller includes care instructions.',
+      comment:
+        'Beautiful grain. Remember to oil them occasionally — the seller includes care instructions.',
     },
     {
       user: 'Rohan Gupta',
       rating: 4,
-      comment: 'Well finished, no rough edges. The middle bowl had a small knot, but honestly it adds character.',
+      comment:
+        'Well finished, no rough edges. The middle bowl had a small knot, but honestly it adds character.',
     },
   ],
   'Papier-Mâché Naqashi Keepsake Box': [
@@ -110,12 +116,14 @@ const reviews = {
     {
       user: 'Ananya Iyer',
       rating: 5,
-      comment: 'So light you would not believe it is paper. The lacquer finish feels like glass.',
+      comment:
+        'So light you would not believe it is paper. The lacquer finish feels like glass.',
     },
     {
       user: 'Arjun Sharma',
       rating: 4,
-      comment: 'Bought two as return gifts. Both had different patterns, which the recipients loved.',
+      comment:
+        'Bought two as return gifts. Both had different patterns, which the recipients loved.',
     },
   ],
   'Traditional Copper Samovar': [
@@ -128,7 +136,8 @@ const reviews = {
     {
       user: 'Aarav Mehta',
       rating: 4,
-      comment: 'The chasing work on the body is stunning. It needs regular polishing, but that is copper for you.',
+      comment:
+        'The chasing work on the body is stunning. It needs regular polishing, but that is copper for you.',
     },
     {
       user: 'Vikram Singh',
@@ -140,17 +149,20 @@ const reviews = {
     {
       user: 'Priya Nair',
       rating: 4,
-      comment: 'The wool embroidery is dense and even. Colours match my sofa perfectly — spruce is a deep true green.',
+      comment:
+        'The wool embroidery is dense and even. Colours match my sofa perfectly — spruce is a deep true green.',
     },
     {
       user: 'Rohan Gupta',
       rating: 5,
-      comment: 'Sturdy backing fabric and a proper concealed zip. These will outlast the sofa.',
+      comment:
+        'Sturdy backing fabric and a proper concealed zip. These will outlast the sofa.',
     },
     {
       user: 'Meera Pillai',
       rating: 4,
-      comment: 'Lovely texture. Dry clean only, so keep that in mind with kids around.',
+      comment:
+        'Lovely texture. Dry clean only, so keep that in mind with kids around.',
     },
   ],
   'Chain-Stitch Namda Rug, 3 x 5 ft': [
@@ -163,12 +175,14 @@ const reviews = {
     {
       user: 'Ananya Iyer',
       rating: 4,
-      comment: 'Thicker than I expected in a good way. Sheds slightly at first — vacuum gently.',
+      comment:
+        'Thicker than I expected in a good way. Sheds slightly at first — vacuum gently.',
     },
     {
       user: 'Zara Khan',
       rating: 5,
-      comment: 'The pomegranate motif is beautiful. It has made the whole room feel finished.',
+      comment:
+        'The pomegranate motif is beautiful. It has made the whole room feel finished.',
     },
   ],
   'Khatamband Walnut Coaster Set': [
@@ -181,7 +195,8 @@ const reviews = {
     {
       user: 'Vikram Singh',
       rating: 4,
-      comment: 'Handsome set with a solid holder. Wipe spills quickly since the wood is oil-finished.',
+      comment:
+        'Handsome set with a solid holder. Wipe spills quickly since the wood is oil-finished.',
     },
     {
       user: 'Priya Nair',
@@ -193,17 +208,20 @@ const reviews = {
     {
       user: 'Meera Pillai',
       rating: 4,
-      comment: 'Using it as a planter with a money plant and it looks fantastic. Neat, tight weave with cheerful dyed bands.',
+      comment:
+        'Using it as a planter with a money plant and it looks fantastic. Neat, tight weave with cheerful dyed bands.',
     },
     {
       user: 'Aarav Mehta',
       rating: 4,
-      comment: 'Exactly as pictured. The earthen pot inside is nicely made too.',
+      comment:
+        'Exactly as pictured. The earthen pot inside is nicely made too.',
     },
     {
       user: 'Ananya Iyer',
       rating: 5,
-      comment: 'Such a piece of living history for under a thousand rupees. My grandmother recognised it instantly.',
+      comment:
+        'Such a piece of living history for under a thousand rupees. My grandmother recognised it instantly.',
     },
   ],
   'Aari Embroidered Wool Pheran': [
@@ -216,12 +234,14 @@ const reviews = {
     {
       user: 'Arjun Sharma',
       rating: 4,
-      comment: 'Very comfortable and the raffal wool does not itch. Wish more colours were available.',
+      comment:
+        'Very comfortable and the raffal wool does not itch. Wish more colours were available.',
     },
     {
       user: 'Rohan Gupta',
       rating: 5,
-      comment: 'Lived in this all winter. Machine wash on wool cycle has been fine so far.',
+      comment:
+        'Lived in this all winter. Machine wash on wool cycle has been fine so far.',
     },
   ],
   'Pashmina Muffler — Diamond Weave': [
@@ -234,7 +254,8 @@ const reviews = {
     {
       user: 'Meera Pillai',
       rating: 4,
-      comment: 'Bought one for my father and one for myself. Soft, warm, and the natural colours go with everything.',
+      comment:
+        'Bought one for my father and one for myself. Soft, warm, and the natural colours go with everything.',
     },
   ],
   'Aari Embroidered Wool Jacket': [
@@ -247,12 +268,14 @@ const reviews = {
     {
       user: 'Priya Nair',
       rating: 4,
-      comment: 'Beautifully tailored, true to size. The lining makes it comfortable over a thin kurta.',
+      comment:
+        'Beautifully tailored, true to size. The lining makes it comfortable over a thin kurta.',
     },
     {
       user: 'Aarav Mehta',
       rating: 5,
-      comment: 'Gifted to my wife — the vine work on the front panels is genuinely artwork.',
+      comment:
+        'Gifted to my wife — the vine work on the front panels is genuinely artwork.',
     },
   ],
   'Kashmiri Walnut Kernels, 500g': [
@@ -265,12 +288,14 @@ const reviews = {
     {
       user: 'Ananya Iyer',
       rating: 5,
-      comment: 'Fresh and oily the way walnuts should be. The vacuum pack kept them crisp.',
+      comment:
+        'Fresh and oily the way walnuts should be. The vacuum pack kept them crisp.',
     },
     {
       user: 'Vikram Singh',
       rating: 4,
-      comment: 'Excellent quality. Finished the bag in a week, which says everything.',
+      comment:
+        'Excellent quality. Finished the bag in a week, which says everything.',
     },
   ],
   'Wildflower Forest Honey, 350g': [
@@ -283,7 +308,8 @@ const reviews = {
     {
       user: 'Arjun Sharma',
       rating: 4,
-      comment: 'Tastes nothing like commercial honey. A spoon in kahwa is my new ritual.',
+      comment:
+        'Tastes nothing like commercial honey. A spoon in kahwa is my new ritual.',
     },
   ],
   'Engraved Copper Kahwa Cups, Set of 4': [
@@ -296,12 +322,14 @@ const reviews = {
     {
       user: 'Zara Khan',
       rating: 4,
-      comment: 'Beautiful little cups. They do get hot to hold, so let the kahwa sit a minute.',
+      comment:
+        'Beautiful little cups. They do get hot to hold, so let the kahwa sit a minute.',
     },
     {
       user: 'Priya Nair',
       rating: 5,
-      comment: 'Served filter coffee in these at a dinner party — everyone photographed them.',
+      comment:
+        'Served filter coffee in these at a dinner party — everyone photographed them.',
     },
   ],
   'Walnut Wood Serving Tray': [
@@ -314,7 +342,8 @@ const reviews = {
     {
       user: 'Ananya Iyer',
       rating: 4,
-      comment: 'The grain is gorgeous. Slightly heavier than expected, but it feels like it will last decades.',
+      comment:
+        'The grain is gorgeous. Slightly heavier than expected, but it feels like it will last decades.',
     },
   ],
   'Papier-Mâché Baubles, Set of 6': [
@@ -327,12 +356,14 @@ const reviews = {
     {
       user: 'Rohan Gupta',
       rating: 4,
-      comment: 'Light, colourful and well finished. The silk cords are a thoughtful touch.',
+      comment:
+        'Light, colourful and well finished. The silk cords are a thoughtful touch.',
     },
     {
       user: 'Meera Pillai',
       rating: 5,
-      comment: 'Ordered a second set as gifts. The naqashi box they arrive in is a gift by itself.',
+      comment:
+        'Ordered a second set as gifts. The naqashi box they arrive in is a gift by itself.',
     },
   ],
   'Willow Wicker Picnic Basket': [
@@ -345,24 +376,28 @@ const reviews = {
     {
       user: 'Arjun Sharma',
       rating: 5,
-      comment: 'The weave is tight and even — clearly the same hands that make the bread baskets in Srinagar.',
+      comment:
+        'The weave is tight and even — clearly the same hands that make the bread baskets in Srinagar.',
     },
   ],
   'Valley Dry Fruits Gift Box': [
     {
       user: 'Vikram Singh',
       rating: 5,
-      comment: 'The apricots are soft and tangy, nothing like the leathery store-bought kind. The walnut box itself is a keeper.',
+      comment:
+        'The apricots are soft and tangy, nothing like the leathery store-bought kind. The walnut box itself is a keeper.',
     },
     {
       user: 'Priya Nair',
       rating: 4,
-      comment: 'Sent it as a Diwali gift — the family was delighted. Cherries were the highlight.',
+      comment:
+        'Sent it as a Diwali gift — the family was delighted. Cherries were the highlight.',
     },
     {
       user: 'Meera Pillai',
       rating: 4,
-      comment: 'Fresh and generous portions. A little pricey, but it is clearly premium produce.',
+      comment:
+        'Fresh and generous portions. A little pricey, but it is clearly premium produce.',
     },
   ],
 };

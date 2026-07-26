@@ -17,10 +17,7 @@ import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { addToCart } from '../slices/cartSlice';
 import { toggleWishlist } from '../slices/wishlistSlice';
-import {
-  getRecentlyViewed,
-  recordProductView,
-} from '../utils/recentlyViewed';
+import { getRecentlyViewed, recordProductView } from '../utils/recentlyViewed';
 import { formatINR, formatDate } from '../utils/formatters';
 
 const ProductScreen = () => {
@@ -145,7 +142,12 @@ const ProductScreen = () => {
 
       <div className='product-detail'>
         <div className='product-detail__image'>
-          <img src={product.image} alt={product.name} width='800' height='600' />
+          <img
+            src={product.image}
+            alt={product.name}
+            width='800'
+            height='600'
+          />
         </div>
 
         <div>

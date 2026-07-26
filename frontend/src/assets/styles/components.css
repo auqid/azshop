@@ -12,7 +12,9 @@
   border-radius: var(--radius-m);
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
 }
@@ -140,7 +142,9 @@
   color: var(--reed);
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(43, 32, 19, 0.22);
-  transition: transform 0.15s ease, color 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    color 0.15s ease;
 }
 
 .save-btn:hover {
@@ -304,7 +308,9 @@
   border-radius: var(--radius-s);
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.15s ease, border-color 0.15s ease,
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
     color 0.15s ease;
 }
 
@@ -473,7 +479,9 @@ select.field__input {
   margin-bottom: 0.9rem;
   cursor: pointer;
   background: #fff;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .choice:has(input:checked) {
@@ -666,7 +674,9 @@ select.field__input {
   font-size: 0.88rem;
   font-weight: 600;
   text-decoration: none;
-  transition: border-color 0.15s ease, color 0.15s ease,
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease,
     background 0.15s ease;
 }
 

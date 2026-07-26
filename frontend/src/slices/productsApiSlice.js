@@ -79,5 +79,4 @@ export const {
   useDeleteProductMutation,
   useCreateReviewMutation,
   useGetTopProductsQuery,
-
 } = productsApiSlice;

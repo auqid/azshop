@@ -1,13 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { updateCart } from '../utils/cartUtils';
 
-const initialState = localStorage.getItem('cart')
-  ? JSON.parse(localStorage.getItem('cart'))
-  : {
-      cartItems: [],
-      shippingAddress: {},
-      paymentMethod: 'Cash on Delivery',
-    };
+const defaultState = {
+  cartItems: [],
+  shippingAddress: {},
+  paymentMethod: 'Cash on Delivery',
+};
+
+const getInitialCartState = () => {
+  try {
+    const item = localStorage.getItem('cart');
+    return item ? JSON.parse(item) : defaultState;
+  } catch {
+    return defaultState;
+  }
+};
+
+const initialState = getInitialCartState();
 
 const cartSlice = createSlice({
   name: 'cart',

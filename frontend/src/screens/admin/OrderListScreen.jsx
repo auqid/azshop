@@ -54,7 +54,11 @@ const OrderListScreen = () => {
             <button
               key={f.value}
               type='button'
-              className={status === f.value ? 'segmented__btn is-active' : 'segmented__btn'}
+              className={
+                status === f.value
+                  ? 'segmented__btn is-active'
+                  : 'segmented__btn'
+              }
               onClick={() => setStatus(f.value)}
             >
               {f.label}
@@ -114,7 +118,9 @@ const OrderListScreen = () => {
                   </td>
                   <td>
                     {order.isPaid ? (
-                      <span className='cell-ok'>{formatDate(order.paidAt)}</span>
+                      <span className='cell-ok'>
+                        {formatDate(order.paidAt)}
+                      </span>
                     ) : (
                       <FaTimes className='cell-no' aria-label='Not paid' />
                     )}

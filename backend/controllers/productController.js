@@ -94,14 +94,22 @@ const createProduct = asyncHandler(async (req, res) => {
     throw new Error('Name, description, craft house and category are required');
   }
 
+  const numPrice = Number(price);
+  const numStock = Number(countInStock);
+
+  if (numPrice < 0 || numStock < 0) {
+    res.status(400);
+    throw new Error('Price and count in stock cannot be negative');
+  }
+
   const product = new Product({
     name,
-    price: Number(price) || 0,
+    price: numPrice || 0,
     user: req.user._id,
     image: image || '/images/placeholder.svg',
     brand,
     category,
-    countInStock: Number(countInStock) || 0,
+    countInStock: numStock || 0,
     numReviews: 0,
     description,
   });
@@ -117,16 +125,21 @@ const updateProduct = asyncHandler(async (req, res) => {
   const { name, price, description, image, brand, category, countInStock } =
     req.body;
 
+  if (Number(price) < 0 || Number(countInStock) < 0) {
+    res.status(400);
+    throw new Error('Price and count in stock cannot be negative');
+  }
+
   const product = await Product.findById(req.params.id);
 
   if (product) {
     product.name = name;
-    product.price = price;
+    product.price = Number(price);
     product.description = description;
     product.image = image;
     product.brand = brand;
     product.category = category;
-    product.countInStock = countInStock;
+    product.countInStock = Number(countInStock);
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);

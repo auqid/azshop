@@ -17,8 +17,8 @@ const CheckoutSteps = ({ current }) => {
           stepNumber < current
             ? 'step step--done'
             : stepNumber === current
-            ? 'step step--current'
-            : 'step';
+              ? 'step step--current'
+              : 'step';
 
         return (
           <li key={step.to} className={state}>

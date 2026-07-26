@@ -60,7 +60,14 @@ const OrderScreen = () => {
         loadPaypalScript();
       }
     }
-  }, [isPayPalOrder, errorPayPal, loadingPayPal, order, paypal, paypalDispatch]);
+  }, [
+    isPayPalOrder,
+    errorPayPal,
+    loadingPayPal,
+    order,
+    paypal,
+    paypalDispatch,
+  ]);
 
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
@@ -112,9 +119,7 @@ const OrderScreen = () => {
     </div>
   ) : error ? (
     <div className='container page'>
-      <Message variant='danger'>
-        {error?.data?.message || error.error}
-      </Message>
+      <Message variant='danger'>{error?.data?.message || error.error}</Message>
     </div>
   ) : (
     <div className='container page'>
@@ -191,34 +196,34 @@ const OrderScreen = () => {
             (!order.isDelivered ||
               (!order.isPaid &&
                 order.paymentMethod === 'Cash on Delivery')) && (
-            <div className='panel__section'>
-              {!order.isPaid &&
-                order.paymentMethod === 'Cash on Delivery' && (
-                  <button
-                    type='button'
-                    className='btn btn--dark btn--block'
-                    onClick={codPaidHandler}
-                    disabled={loadingPayCod}
-                    style={{ marginBottom: '0.75rem' }}
-                  >
-                    Mark as paid (cash collected)
-                  </button>
-                )}
-              {!order.isDelivered &&
-                (order.isPaid ||
-                  order.paymentMethod === 'Cash on Delivery') && (
-                  <button
-                    type='button'
-                    className='btn btn--block'
-                    onClick={deliverHandler}
-                    disabled={loadingDeliver}
-                  >
-                    Mark as delivered
-                  </button>
-                )}
-              {loadingDeliver && <Loader small />}
-            </div>
-          )}
+              <div className='panel__section'>
+                {!order.isPaid &&
+                  order.paymentMethod === 'Cash on Delivery' && (
+                    <button
+                      type='button'
+                      className='btn btn--dark btn--block'
+                      onClick={codPaidHandler}
+                      disabled={loadingPayCod}
+                      style={{ marginBottom: '0.75rem' }}
+                    >
+                      Mark as paid (cash collected)
+                    </button>
+                  )}
+                {!order.isDelivered &&
+                  (order.isPaid ||
+                    order.paymentMethod === 'Cash on Delivery') && (
+                    <button
+                      type='button'
+                      className='btn btn--block'
+                      onClick={deliverHandler}
+                      disabled={loadingDeliver}
+                    >
+                      Mark as delivered
+                    </button>
+                  )}
+                {loadingDeliver && <Loader small />}
+              </div>
+            )}
         </aside>
       </div>
     </div>

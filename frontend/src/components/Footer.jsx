@@ -23,11 +23,7 @@ const Footer = () => {
             >
               <FaLinkedin aria-hidden='true' /> LinkedIn
             </a>
-            <a
-              href='https://github.com/auqid'
-              target='_blank'
-              rel='noreferrer'
-            >
+            <a href='https://github.com/auqid' target='_blank' rel='noreferrer'>
               <FaGithub aria-hidden='true' /> GitHub
             </a>
             <a

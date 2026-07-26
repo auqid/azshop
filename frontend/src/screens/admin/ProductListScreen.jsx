@@ -70,11 +70,7 @@ const ProductListScreen = () => {
                 {data.products.map((product) => (
                   <tr key={product._id}>
                     <td>
-                      <img
-                        src={product.image}
-                        alt=''
-                        className='table-thumb'
-                      />
+                      <img src={product.image} alt='' className='table-thumb' />
                     </td>
                     <td>
                       {product.name}

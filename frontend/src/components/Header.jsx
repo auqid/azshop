@@ -100,7 +100,9 @@ const Header = () => {
               label={
                 <>
                   <FaUserCircle />
-                  <span className='nav-text'>{userInfo.name.split(' ')[0]}</span>
+                  <span className='nav-text'>
+                    {userInfo.name.split(' ')[0]}
+                  </span>
                 </>
               }
             >

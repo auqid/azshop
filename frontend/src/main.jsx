@@ -33,11 +33,11 @@ import Loader from './components/Loader';
 // every shopper downloads.
 const DashboardScreen = lazy(() => import('./screens/admin/DashboardScreen'));
 const OrderListScreen = lazy(() => import('./screens/admin/OrderListScreen'));
-const ProductListScreen = lazy(() =>
-  import('./screens/admin/ProductListScreen')
+const ProductListScreen = lazy(
+  () => import('./screens/admin/ProductListScreen')
 );
-const ProductEditScreen = lazy(() =>
-  import('./screens/admin/ProductEditScreen')
+const ProductEditScreen = lazy(
+  () => import('./screens/admin/ProductEditScreen')
 );
 const UserListScreen = lazy(() => import('./screens/admin/UserListScreen'));
 const UserEditScreen = lazy(() => import('./screens/admin/UserEditScreen'));

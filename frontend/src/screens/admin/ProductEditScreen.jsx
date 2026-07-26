@@ -108,7 +108,9 @@ const ProductEditScreen = () => {
     <div className='container page'>
       <Meta
         title={
-          isCreating ? 'Add product — Nargis admin' : 'Edit product — Nargis admin'
+          isCreating
+            ? 'Add product — Nargis admin'
+            : 'Edit product — Nargis admin'
         }
       />
       <Link to='/admin/productlist' className='back-link'>

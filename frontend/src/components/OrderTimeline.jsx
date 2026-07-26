@@ -16,8 +16,8 @@ const OrderTimeline = ({ order }) => {
       detail: order.isPaid
         ? formatDate(order.paidAt)
         : isCod
-        ? 'Collected on delivery'
-        : 'Awaiting payment',
+          ? 'Collected on delivery'
+          : 'Awaiting payment',
       done: order.isPaid,
     },
     {

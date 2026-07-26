@@ -34,6 +34,10 @@ const ProfileScreen = () => {
       toast.error('Passwords do not match');
       return;
     }
+    if (password && password.length < 8) {
+      toast.error('New password must be at least 8 characters long');
+      return;
+    }
     try {
       const res = await updateProfile({ name, email, password }).unwrap();
       dispatch(setCredentials({ ...res }));

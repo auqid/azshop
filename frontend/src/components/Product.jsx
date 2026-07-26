@@ -54,7 +54,9 @@ const Product = ({ product }) => {
           className={saved ? 'save-btn is-saved' : 'save-btn'}
           onClick={wishlistHandler}
           aria-pressed={saved}
-          aria-label={saved ? `Remove ${product.name} from saved` : `Save ${product.name}`}
+          aria-label={
+            saved ? `Remove ${product.name} from saved` : `Save ${product.name}`
+          }
           title={saved ? 'Remove from saved' : 'Save for later'}
         >
           {saved ? <FaHeart /> : <FaRegHeart />}

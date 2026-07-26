@@ -68,9 +68,7 @@ const Hero = () => {
                     key={p._id}
                     type='button'
                     className={
-                      i === index
-                        ? 'featured__dot is-active'
-                        : 'featured__dot'
+                      i === index ? 'featured__dot is-active' : 'featured__dot'
                     }
                     aria-label={`Show ${p.name}`}
                     onClick={() => setIndex(i)}

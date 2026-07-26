@@ -38,7 +38,9 @@ const DashboardScreen = () => {
             </div>
             <div
               className={
-                summary.unpaidCod > 0 ? 'stat-card stat-card--warn' : 'stat-card'
+                summary.unpaidCod > 0
+                  ? 'stat-card stat-card--warn'
+                  : 'stat-card'
               }
             >
               <div className='stat-card__label'>COD to collect</div>
@@ -47,7 +49,9 @@ const DashboardScreen = () => {
             </div>
             <div
               className={
-                summary.outOfStock > 0 ? 'stat-card stat-card--warn' : 'stat-card'
+                summary.outOfStock > 0
+                  ? 'stat-card stat-card--warn'
+                  : 'stat-card'
               }
             >
               <div className='stat-card__label'>Products</div>

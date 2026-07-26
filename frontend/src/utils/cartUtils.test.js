@@ -23,7 +23,9 @@ describe('updateCart', () => {
   });
 
   it('mirrors the backend free-shipping rule', () => {
-    const under = updateCart(cartWith({ price: FREE_SHIPPING_THRESHOLD, qty: 1 }));
+    const under = updateCart(
+      cartWith({ price: FREE_SHIPPING_THRESHOLD, qty: 1 })
+    );
     const over = updateCart(
       cartWith({ price: FREE_SHIPPING_THRESHOLD + 1, qty: 1 })
     );

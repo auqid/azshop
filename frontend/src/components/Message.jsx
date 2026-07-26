@@ -3,8 +3,8 @@ const Message = ({ variant = 'info', children }) => {
     variant === 'danger'
       ? 'alert alert--danger'
       : variant === 'success'
-      ? 'alert alert--success'
-      : 'alert';
+        ? 'alert alert--success'
+        : 'alert';
 
   return <div className={variantClass}>{children}</div>;
 };
