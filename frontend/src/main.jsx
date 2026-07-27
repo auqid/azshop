@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
@@ -15,6 +15,7 @@ import store from './store';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
+import WishlistScreen from './screens/WishlistScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ShippingScreen from './screens/ShippingScreen';
@@ -22,19 +23,37 @@ import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import NotFoundScreen from './screens/NotFoundScreen';
 import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute';
-import DashboardScreen from './screens/admin/DashboardScreen';
-import OrderListScreen from './screens/admin/OrderListScreen';
-import ProductListScreen from './screens/admin/ProductListScreen';
-import ProductEditScreen from './screens/admin/ProductEditScreen';
-import UserListScreen from './screens/admin/UserListScreen';
-import UserEditScreen from './screens/admin/UserEditScreen';
+import ErrorBoundary from './components/ErrorBoundary';
+import Loader from './components/Loader';
+
+// Admin screens are only reachable by admins, so keep them out of the bundle
+// every shopper downloads.
+const DashboardScreen = lazy(() => import('./screens/admin/DashboardScreen'));
+const OrderListScreen = lazy(() => import('./screens/admin/OrderListScreen'));
+const ProductListScreen = lazy(
+  () => import('./screens/admin/ProductListScreen')
+);
+const ProductEditScreen = lazy(
+  () => import('./screens/admin/ProductEditScreen')
+);
+const UserListScreen = lazy(() => import('./screens/admin/UserListScreen'));
+const UserEditScreen = lazy(() => import('./screens/admin/UserEditScreen'));
+
+const AdminArea = () => (
+  <Suspense fallback={<Loader />}>
+    <AdminRoute />
+  </Suspense>
+);
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route index={true} path='/' element={<HomeScreen />} />
+      <Route path='/search' element={<HomeScreen />} />
+      <Route path='/search/page/:pageNumber' element={<HomeScreen />} />
       <Route path='/search/:keyword' element={<HomeScreen />} />
       <Route path='/page/:pageNumber' element={<HomeScreen />} />
       <Route
@@ -48,6 +67,7 @@ const router = createBrowserRouter(
       />
       <Route path='/product/:id' element={<ProductScreen />} />
       <Route path='/cart' element={<CartScreen />} />
+      <Route path='/wishlist' element={<WishlistScreen />} />
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
 
@@ -59,7 +79,7 @@ const router = createBrowserRouter(
         <Route path='/profile' element={<ProfileScreen />} />
       </Route>
 
-      <Route path='' element={<AdminRoute />}>
+      <Route path='' element={<AdminArea />}>
         <Route path='/admin/dashboard' element={<DashboardScreen />} />
         <Route path='/admin/orderlist' element={<OrderListScreen />} />
         <Route path='/admin/productlist' element={<ProductListScreen />} />
@@ -72,21 +92,25 @@ const router = createBrowserRouter(
         <Route path='/admin/userlist' element={<UserListScreen />} />
         <Route path='/admin/user/:id/edit' element={<UserEditScreen />} />
       </Route>
+
+      <Route path='*' element={<NotFoundScreen />} />
     </Route>
   )
 );
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <HelmetProvider>
-      <Provider store={store}>
-        <PayPalScriptProvider deferLoading={true}>
-          <RouterProvider
-            router={router}
-            future={{ v7_startTransition: true }}
-          />
-        </PayPalScriptProvider>
-      </Provider>
-    </HelmetProvider>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <Provider store={store}>
+          <PayPalScriptProvider deferLoading={true}>
+            <RouterProvider
+              router={router}
+              future={{ v7_startTransition: true }}
+            />
+          </PayPalScriptProvider>
+        </Provider>
+      </HelmetProvider>
+    </ErrorBoundary>
   </React.StrictMode>
 );

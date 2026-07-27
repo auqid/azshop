@@ -42,6 +42,33 @@ const addOrderItems = asyncHandler(async (req, res) => {
     const { itemsPrice, taxPrice, shippingPrice, totalPrice } =
       calcPrices(dbOrderItems);
 
+    // Reserve stock before saving the order. Each update only succeeds while
+    // enough stock remains, so two shoppers can't buy the same last item; if
+    // any item runs out we put back what we already took and fail the order.
+    const reserved = [];
+    for (const item of dbOrderItems) {
+      const updated = await Product.findOneAndUpdate(
+        { _id: item.product, countInStock: { $gte: item.qty } },
+        { $inc: { countInStock: -item.qty } },
+        { new: true }
+      );
+
+      if (!updated) {
+        await Promise.all(
+          reserved.map((r) =>
+            Product.updateOne(
+              { _id: r.product },
+              { $inc: { countInStock: r.qty } }
+            )
+          )
+        );
+        res.status(400);
+        throw new Error(`${item.name} is out of stock`);
+      }
+
+      reserved.push(item);
+    }
+
     const order = new Order({
       orderItems: dbOrderItems,
       user: req.user._id,
@@ -53,9 +80,21 @@ const addOrderItems = asyncHandler(async (req, res) => {
       totalPrice,
     });
 
-    const createdOrder = await order.save();
-
-    res.status(201).json(createdOrder);
+    try {
+      const createdOrder = await order.save();
+      res.status(201).json(createdOrder);
+    } catch (err) {
+      // Saving failed after stock was taken — release it again
+      await Promise.all(
+        reserved.map((r) =>
+          Product.updateOne(
+            { _id: r.product },
+            { $inc: { countInStock: r.qty } }
+          )
+        )
+      );
+      throw err;
+    }
   }
 });
 
@@ -77,6 +116,14 @@ const getOrderById = asyncHandler(async (req, res) => {
   );
 
   if (order) {
+    const isOwner = order.user._id.toString() === req.user._id.toString();
+    const isAdmin = req.user.isAdmin;
+
+    if (!isOwner && !isAdmin) {
+      res.status(403);
+      throw new Error('Not authorized to view this order');
+    }
+
     res.json(order);
   } else {
     res.status(404);
@@ -100,6 +147,14 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 
   if (order) {
+    const isOwner = order.user.toString() === req.user._id.toString();
+    const isAdmin = req.user.isAdmin;
+
+    if (!isOwner && !isAdmin) {
+      res.status(403);
+      throw new Error('Not authorized to update this order');
+    }
+
     // check the correct amount was paid
     const paidCorrectAmount = order.totalPrice.toString() === value;
     if (!paidCorrectAmount) throw new Error('Incorrect amount paid');
@@ -131,7 +186,9 @@ const updateCodOrderToPaid = asyncHandler(async (req, res) => {
   if (order) {
     if (order.paymentMethod !== 'Cash on Delivery') {
       res.status(400);
-      throw new Error('Only Cash on Delivery orders can be marked paid manually');
+      throw new Error(
+        'Only Cash on Delivery orders can be marked paid manually'
+      );
     }
 
     order.isPaid = true;
@@ -182,23 +239,28 @@ const getOrders = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/summary
 // @access  Private/Admin
 const getOrderSummary = asyncHandler(async (req, res) => {
-  const [revenueAgg, ordersCount, unpaidCod, undelivered, productsCount, outOfStock, usersCount, recentOrders] =
-    await Promise.all([
-      Order.aggregate([
-        { $match: { isPaid: true } },
-        { $group: { _id: null, total: { $sum: '$totalPrice' } } },
-      ]),
-      Order.countDocuments(),
-      Order.countDocuments({ isPaid: false, paymentMethod: 'Cash on Delivery' }),
-      Order.countDocuments({ isDelivered: false }),
-      Product.countDocuments(),
-      Product.countDocuments({ countInStock: 0 }),
-      User.countDocuments(),
-      Order.find({})
-        .sort({ createdAt: -1 })
-        .limit(6)
-        .populate('user', 'name'),
-    ]);
+  const [
+    revenueAgg,
+    ordersCount,
+    unpaidCod,
+    undelivered,
+    productsCount,
+    outOfStock,
+    usersCount,
+    recentOrders,
+  ] = await Promise.all([
+    Order.aggregate([
+      { $match: { isPaid: true } },
+      { $group: { _id: null, total: { $sum: '$totalPrice' } } },
+    ]),
+    Order.countDocuments(),
+    Order.countDocuments({ isPaid: false, paymentMethod: 'Cash on Delivery' }),
+    Order.countDocuments({ isDelivered: false }),
+    Product.countDocuments(),
+    Product.countDocuments({ countInStock: 0 }),
+    User.countDocuments(),
+    Order.find({}).sort({ createdAt: -1 }).limit(6).populate('user', 'name'),
+  ]);
 
   res.json({
     paidRevenue: revenueAgg[0]?.total || 0,

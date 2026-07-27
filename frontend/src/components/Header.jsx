@@ -6,6 +6,7 @@ import {
   FaUserCircle,
   FaChevronDown,
   FaSlidersH,
+  FaHeart,
 } from 'react-icons/fa';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
@@ -48,6 +49,7 @@ const Menu = ({ label, children }) => {
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
+  const { items: savedItems } = useSelector((state) => state.wishlist);
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -65,6 +67,7 @@ const Header = () => {
   };
 
   const cartCount = cartItems.reduce((a, c) => a + c.qty, 0);
+  const savedCount = savedItems.length;
 
   return (
     <header className='site-header'>
@@ -80,6 +83,12 @@ const Header = () => {
         <SearchBox />
 
         <nav className='site-nav'>
+          <Link to='/wishlist' className='nav-link' aria-label='Saved items'>
+            <FaHeart />
+            <span className='nav-text'>Saved</span>
+            {savedCount > 0 && <span className='cart-badge'>{savedCount}</span>}
+          </Link>
+
           <Link to='/cart' className='nav-link' aria-label='Cart'>
             <FaShoppingBasket />
             <span className='nav-text'>Cart</span>
@@ -91,7 +100,9 @@ const Header = () => {
               label={
                 <>
                   <FaUserCircle />
-                  <span className='nav-text'>{userInfo.name.split(' ')[0]}</span>
+                  <span className='nav-text'>
+                    {userInfo.name.split(' ')[0]}
+                  </span>
                 </>
               }
             >

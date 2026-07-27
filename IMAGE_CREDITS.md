@@ -13,6 +13,6 @@ The remaining product images are original SVG illustrations made for this projec
 - `frontend/public/images/pheran.jpg` — [File:A kashmiri young man dressed in a traditional pheran, holding a kangri.jpg](https://commons.wikimedia.org/wiki/File:A_kashmiri_young_man_dressed_in_a_traditional_pheran,_holding_a_kangri.jpg) by Aadil.Farooq, CC0
 - `frontend/public/images/saffron.jpg` — [File:Safrron stigmas of Crocus speciosus.jpg](https://commons.wikimedia.org/wiki/File:Safrron_stigmas_of_Crocus_speciosus.jpg) by User:Velela, CC BY-SA 3.0
 - `frontend/public/images/samovar.jpg` — [File:Samovar , Kashmiri style Kashmiri kettle 02.jpg](https://commons.wikimedia.org/wiki/File:Samovar_,_Kashmiri_style_Kashmiri_kettle_02.jpg) by Harvinder Chandigarh, CC BY 4.0
-- `frontend/public/images/sozni-stole.jpg` — [File:Shawl (AM 1936.223-4).jpg](https://commons.wikimedia.org/wiki/File:Shawl_(AM_1936.223-4).jpg) by unknown author, CC BY 4.0
+- `frontend/public/images/sozni-stole.jpg` — [File:Shawl (AM 1936.223-4).jpg](<https://commons.wikimedia.org/wiki/File:Shawl_(AM_1936.223-4).jpg>) by unknown author, CC BY 4.0
 - `frontend/public/images/walnut-bowls.jpg` — [File:Wooden plates, cups , bowls and trays.jpg](https://commons.wikimedia.org/wiki/File:Wooden_plates,_cups_,_bowls_and_trays.jpg) by Bukky658, CC BY-SA 4.0
 - `frontend/public/images/walnut-kernels.jpg` — [File:Walnut kernel photographed in West Bengal, India.jpg](https://commons.wikimedia.org/wiki/File:Walnut_kernel_photographed_in_West_Bengal,_India.jpg) by Billjones94, CC BY-SA 4.0

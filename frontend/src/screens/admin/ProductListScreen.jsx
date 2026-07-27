@@ -8,7 +8,6 @@ import Meta from '../../components/Meta';
 import {
   useGetProductsQuery,
   useDeleteProductMutation,
-  useCreateProductMutation,
 } from '../../slices/productsApiSlice';
 import { formatINR } from '../../utils/formatters';
 
@@ -53,7 +52,8 @@ const ProductListScreen = () => {
         </Message>
       ) : (
         <>
-          <div className='table-wrap'>
+          {/* Desktop Table View */}
+          <div className='table-wrap admin-products__desktop'>
             <table className='table'>
               <thead>
                 <tr>
@@ -71,11 +71,7 @@ const ProductListScreen = () => {
                 {data.products.map((product) => (
                   <tr key={product._id}>
                     <td>
-                      <img
-                        src={product.image}
-                        alt=''
-                        className='table-thumb'
-                      />
+                      <img src={product.image} alt='' className='table-thumb' />
                     </td>
                     <td>
                       {product.name}
@@ -122,6 +118,78 @@ const ProductListScreen = () => {
               </tbody>
             </table>
           </div>
+
+          {/* Mobile Admin Product Cards View */}
+          <div className='admin-products__mobile'>
+            {data.products.map((product) => (
+              <div key={product._id} className='admin-card-mobile'>
+                <div className='admin-card-mobile__header'>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className='admin-card-mobile__thumb'
+                  />
+                  <div className='admin-card-mobile__info'>
+                    <div className='admin-card-mobile__title'>
+                      {product.name}
+                    </div>
+                    <div className='cell-mono'>
+                      ID: #{product._id.slice(-8)}
+                    </div>
+                    <div className='admin-card-mobile__price'>
+                      {formatINR(product.price)}
+                    </div>
+                  </div>
+                </div>
+
+                <div className='admin-card-mobile__meta'>
+                  <div>
+                    <span className='admin-card-mobile__label'>Category:</span>{' '}
+                    {product.category}
+                  </div>
+                  <div>
+                    <span className='admin-card-mobile__label'>
+                      Craft house:
+                    </span>{' '}
+                    {product.brand}
+                  </div>
+                  <div>
+                    <span className='admin-card-mobile__label'>Stock:</span>{' '}
+                    {product.countInStock === 0 ? (
+                      <span className='badge badge--no'>Out</span>
+                    ) : product.countInStock <= 5 ? (
+                      <span className='badge badge--warn'>
+                        {product.countInStock} left
+                      </span>
+                    ) : (
+                      <span>{product.countInStock} units</span>
+                    )}
+                  </div>
+                  <div>
+                    <span className='admin-card-mobile__label'>Rating:</span>{' '}
+                    {product.rating} ★ ({product.numReviews})
+                  </div>
+                </div>
+
+                <div className='admin-card-mobile__actions'>
+                  <Link
+                    to={`/admin/product/${product._id}/edit`}
+                    className='btn btn--ghost btn--sm'
+                  >
+                    <FaEdit /> Edit
+                  </Link>
+                  <button
+                    type='button'
+                    className='btn btn--danger btn--sm'
+                    onClick={() => deleteHandler(product._id)}
+                  >
+                    <FaTrash /> Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
           <Paginate pages={data.pages} page={data.page} isAdmin={true} />
         </>
       )}

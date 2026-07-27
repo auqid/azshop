@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
+import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { useLoginMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
@@ -11,6 +12,7 @@ import { setCredentials } from '../slices/authSlice';
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [formError, setFormError] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,20 +32,36 @@ const LoginScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setFormError('');
+
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
     } catch (err) {
-      toast.error(err?.data?.message || err.error);
+      const errorMsg =
+        err?.data?.message || err.error || 'Invalid email or password';
+      setFormError(errorMsg);
+      toast.error(errorMsg);
     }
   };
+
+  const registerLink = redirect
+    ? `/register?redirect=${redirect}`
+    : '/register';
 
   return (
     <div className='container page'>
       <Meta title='Sign in — Nargis' />
       <FormContainer>
         <h1>Sign in</h1>
+
+        {formError && (
+          <Message variant='danger'>
+            {formError}. Don&apos;t have an account yet?{' '}
+            <Link to={registerLink}>Create one here.</Link>
+          </Message>
+        )}
 
         <form onSubmit={submitHandler}>
           <div className='field'>
@@ -56,7 +74,10 @@ const LoginScreen = () => {
               type='email'
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (formError) setFormError('');
+              }}
             />
           </div>
 
@@ -70,15 +91,14 @@ const LoginScreen = () => {
               type='password'
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (formError) setFormError('');
+              }}
             />
           </div>
 
-          <button
-            type='submit'
-            className='btn btn--block'
-            disabled={isLoading}
-          >
+          <button type='submit' className='btn btn--block' disabled={isLoading}>
             Sign in
           </button>
           {isLoading && <Loader small />}
@@ -86,10 +106,7 @@ const LoginScreen = () => {
       </FormContainer>
 
       <p className='form-page__footer'>
-        New to Nargis?{' '}
-        <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-          Create an account
-        </Link>
+        New to Nargis? <Link to={registerLink}>Create an account</Link>
       </p>
     </div>
   );

@@ -6,6 +6,7 @@ const Paginate = ({
   isAdmin = false,
   keyword = '',
   category = '',
+  searchAll = false,
 }) => {
   const { search } = useLocation();
 
@@ -15,10 +16,12 @@ const Paginate = ({
     isAdmin
       ? `/admin/productlist/${p}`
       : keyword
-      ? `/search/${keyword}/page/${p}`
-      : category
-      ? `/category/${encodeURIComponent(category)}/page/${p}`
-      : `/page/${p}`;
+        ? `/search/${keyword}/page/${p}`
+        : searchAll
+          ? `/search/page/${p}`
+          : category
+            ? `/category/${encodeURIComponent(category)}/page/${p}`
+            : `/page/${p}`;
 
   return (
     <nav className='pagination' aria-label='Pages'>

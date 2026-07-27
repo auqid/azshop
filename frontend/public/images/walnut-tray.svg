@@ -1,1 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><defs><pattern id="weave" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#f1e8d4"/><path stroke="rgba(43,32,19,0.045)" stroke-width="1" d="M0 7 H14"/><path stroke="rgba(43,32,19,0.035)" stroke-width="1" d="M7 0 V14"/></pattern></defs><rect width="800" height="600" fill="url(#weave)"/><g transform="translate(400 310)"><ellipse cx="0" cy="105" fill="#2b2013" opacity=".08" rx="230" ry="20"/><rect width="470" height="190" x="-235" y="-95" fill="#6b4a2f" rx="26"/><rect width="410" height="140" x="-205" y="-70" fill="#8a6644" rx="16"/><rect width="410" height="140" x="-205" y="-70" fill="none" stroke="#4a3120" stroke-width="3" rx="16"/><path fill="#4a3120" d="M-262 0 a28 28 0 0 1 28 -28 v14 a14 14 0 0 0 -14 14 a14 14 0 0 0 14 14 v14 a28 28 0 0 1 -28 -28 Z"/><path fill="#4a3120" d="M262 0 a28 28 0 0 0 -28 -28 v14 a14 14 0 0 1 14 14 a14 14 0 0 1 -14 14 v14 a28 28 0 0 0 28 -28 Z"/><path fill="none" stroke="#d9c39a" stroke-width="2.5" d="M-160 -52 q10 8 0 16 q-10 -8 0 -16"/><path fill="none" stroke="#d9c39a" stroke-width="2.5" d="M-96 -52 q10 8 0 16 q-10 -8 0 -16"/><path fill="none" stroke="#d9c39a" stroke-width="2.5" d="M-32 -52 q10 8 0 16 q-10 -8 0 -16"/><path fill="none" stroke="#d9c39a" stroke-width="2.5" d="M32 -52 q10 8 0 16 q-10 -8 0 -16"/><path fill="none" stroke="#d9c39a" stroke-width="2.5" d="M96 -52 q10 8 0 16 q-10 -8 0 -16"/><path fill="none" stroke="#d9c39a" stroke-width="2.5" d="M160 -52 q10 8 0 16 q-10 -8 0 -16"/><path fill="#d9c39a" d="M0 -21C4 -14 12 -16 16 -10 12 -8 10 -8 7 -9c3 4 9 4 12 10 -5 2 -9 0 -12 -2 2 4 6 5 7 11 -5 -1 -8 -4 -10 -8L2 14h-4l2 -12c-2 4 -5 7 -10 8 1 -6 5 -7 7 -11 -3 2 -7 4 -12 2 3 -6 9 -6 12 -10 -3 1 -5 1 -9 -1 4 -6 12 -4 16 -11z" transform="translate(-120 30) scale(0.77)"/><path fill="#d9c39a" d="M0 -21C4 -14 12 -16 16 -10 12 -8 10 -8 7 -9c3 4 9 4 12 10 -5 2 -9 0 -12 -2 2 4 6 5 7 11 -5 -1 -8 -4 -10 -8L2 14h-4l2 -12c-2 4 -5 7 -10 8 1 -6 5 -7 7 -11 -3 2 -7 4 -12 2 3 -6 9 -6 12 -10 -3 1 -5 1 -9 -1 4 -6 12 -4 16 -11z" transform="translate(0 30) scale(0.77)"/><path fill="#d9c39a" d="M0 -21C4 -14 12 -16 16 -10 12 -8 10 -8 7 -9c3 4 9 4 12 10 -5 2 -9 0 -12 -2 2 4 6 5 7 11 -5 -1 -8 -4 -10 -8L2 14h-4l2 -12c-2 4 -5 7 -10 8 1 -6 5 -7 7 -11 -3 2 -7 4 -12 2 3 -6 9 -6 12 -10 -3 1 -5 1 -9 -1 4 -6 12 -4 16 -11z" transform="translate(120 30) scale(0.77)"/><path stroke="#4a3120" stroke-width="2" d="M-150 65 h300" opacity=".6"/></g><rect width="764" height="564" x="18" y="18" fill="none" stroke="rgba(43,32,19,0.25)" stroke-width="1.5"/><rect width="748" height="548" x="26" y="26" fill="none" stroke="rgba(43,32,19,0.12)" stroke-width="1"/><rect width="800" height="30" x="0" y="560" fill="#142b25"/><path fill="#c96f1e" d="M40 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#ede6d4" d="M78 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#a43e32" d="M116 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#ede6d4" d="M154 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#c96f1e" d="M192 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#ede6d4" d="M230 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#a43e32" d="M268 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#ede6d4" d="M306 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#c96f1e" d="M344 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#ede6d4" d="M382 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#a43e32" d="M420 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#ede6d4" d="M458 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#c96f1e" d="M496 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#ede6d4" d="M534 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#a43e32" d="M572 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#ede6d4" d="M610 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#c96f1e" d="M648 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#ede6d4" d="M686 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#a43e32" d="M724 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/><path fill="#ede6d4" d="M762 566 l7 9 l-7 9 l-7 -9 Z" opacity=".9"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+
+  <defs>
+    <pattern id="weave" width="14" height="14" patternUnits="userSpaceOnUse">
+      <rect width="14" height="14" fill="#f1e8d4"/>
+      <path d="M0 7 H14" stroke="rgba(43,32,19,0.045)" stroke-width="1"/>
+      <path d="M7 0 V14" stroke="rgba(43,32,19,0.035)" stroke-width="1"/>
+    </pattern>
+  </defs>
+<rect width="800" height="600" fill="url(#weave)"/>
+
+  <g transform="translate(400 310)">
+    <ellipse cx="0" cy="105" rx="230" ry="20" fill="#2b2013" opacity="0.08"/>
+    <rect x="-235" y="-95" width="470" height="190" rx="26" fill="#6b4a2f"/>
+    <rect x="-205" y="-70" width="410" height="140" rx="16" fill="#8a6644"/>
+    <rect x="-205" y="-70" width="410" height="140" rx="16" fill="none" stroke="#4a3120" stroke-width="3"/>
+    <path d="M-262 0 a28 28 0 0 1 28 -28 v14 a14 14 0 0 0 -14 14 a14 14 0 0 0 14 14 v14 a28 28 0 0 1 -28 -28 Z" fill="#4a3120"/>
+    <path d="M262 0 a28 28 0 0 0 -28 -28 v14 a14 14 0 0 1 14 14 a14 14 0 0 1 -14 14 v14 a28 28 0 0 0 28 -28 Z" fill="#4a3120"/>
+    <path d="M-160 -52 q10 8 0 16 q-10 -8 0 -16" fill="none" stroke="#d9c39a" stroke-width="2.5"/><path d="M-96 -52 q10 8 0 16 q-10 -8 0 -16" fill="none" stroke="#d9c39a" stroke-width="2.5"/><path d="M-32 -52 q10 8 0 16 q-10 -8 0 -16" fill="none" stroke="#d9c39a" stroke-width="2.5"/><path d="M32 -52 q10 8 0 16 q-10 -8 0 -16" fill="none" stroke="#d9c39a" stroke-width="2.5"/><path d="M96 -52 q10 8 0 16 q-10 -8 0 -16" fill="none" stroke="#d9c39a" stroke-width="2.5"/><path d="M160 -52 q10 8 0 16 q-10 -8 0 -16" fill="none" stroke="#d9c39a" stroke-width="2.5"/>
+    
+  <path transform="translate(-120 30) scale(0.428)"
+    d="M0 -33 Q5 -20 12 -13 Q19 -19 25 -16 Q19 -6 17 -1 Q25 0 31 6 Q20 9 12 12 L5 16 L3 30 L-3 30 L-5 16 L-12 12 Q-20 9 -31 6 Q-25 0 -17 -1 Q-19 -6 -25 -16 Q-19 -19 -12 -13 Q-5 -20 0 -33 Z"
+    fill="#d9c39a"/>
+    
+  <path transform="translate(0 30) scale(0.428)"
+    d="M0 -33 Q5 -20 12 -13 Q19 -19 25 -16 Q19 -6 17 -1 Q25 0 31 6 Q20 9 12 12 L5 16 L3 30 L-3 30 L-5 16 L-12 12 Q-20 9 -31 6 Q-25 0 -17 -1 Q-19 -6 -25 -16 Q-19 -19 -12 -13 Q-5 -20 0 -33 Z"
+    fill="#d9c39a"/>
+    
+  <path transform="translate(120 30) scale(0.428)"
+    d="M0 -33 Q5 -20 12 -13 Q19 -19 25 -16 Q19 -6 17 -1 Q25 0 31 6 Q20 9 12 12 L5 16 L3 30 L-3 30 L-5 16 L-12 12 Q-20 9 -31 6 Q-25 0 -17 -1 Q-19 -6 -25 -16 Q-19 -19 -12 -13 Q-5 -20 0 -33 Z"
+    fill="#d9c39a"/>
+    <path d="M-150 65 h300" stroke="#4a3120" stroke-width="2" opacity="0.6"/>
+  </g>
+
+  <rect x="18" y="18" width="764" height="564" fill="none"
+    stroke="rgba(43,32,19,0.25)" stroke-width="1.5"/>
+  <rect x="26" y="26" width="748" height="548" fill="none"
+    stroke="rgba(43,32,19,0.12)" stroke-width="1"/>
+<rect x="0" y="560" width="800" height="30" fill="#142b25"/><path d="M40 566 l7 9 l-7 9 l-7 -9 Z" fill="#c96f1e" opacity="0.9"/><path d="M78 566 l7 9 l-7 9 l-7 -9 Z" fill="#ede6d4" opacity="0.9"/><path d="M116 566 l7 9 l-7 9 l-7 -9 Z" fill="#a43e32" opacity="0.9"/><path d="M154 566 l7 9 l-7 9 l-7 -9 Z" fill="#ede6d4" opacity="0.9"/><path d="M192 566 l7 9 l-7 9 l-7 -9 Z" fill="#c96f1e" opacity="0.9"/><path d="M230 566 l7 9 l-7 9 l-7 -9 Z" fill="#ede6d4" opacity="0.9"/><path d="M268 566 l7 9 l-7 9 l-7 -9 Z" fill="#a43e32" opacity="0.9"/><path d="M306 566 l7 9 l-7 9 l-7 -9 Z" fill="#ede6d4" opacity="0.9"/><path d="M344 566 l7 9 l-7 9 l-7 -9 Z" fill="#c96f1e" opacity="0.9"/><path d="M382 566 l7 9 l-7 9 l-7 -9 Z" fill="#ede6d4" opacity="0.9"/><path d="M420 566 l7 9 l-7 9 l-7 -9 Z" fill="#a43e32" opacity="0.9"/><path d="M458 566 l7 9 l-7 9 l-7 -9 Z" fill="#ede6d4" opacity="0.9"/><path d="M496 566 l7 9 l-7 9 l-7 -9 Z" fill="#c96f1e" opacity="0.9"/><path d="M534 566 l7 9 l-7 9 l-7 -9 Z" fill="#ede6d4" opacity="0.9"/><path d="M572 566 l7 9 l-7 9 l-7 -9 Z" fill="#a43e32" opacity="0.9"/><path d="M610 566 l7 9 l-7 9 l-7 -9 Z" fill="#ede6d4" opacity="0.9"/><path d="M648 566 l7 9 l-7 9 l-7 -9 Z" fill="#c96f1e" opacity="0.9"/><path d="M686 566 l7 9 l-7 9 l-7 -9 Z" fill="#ede6d4" opacity="0.9"/><path d="M724 566 l7 9 l-7 9 l-7 -9 Z" fill="#a43e32" opacity="0.9"/><path d="M762 566 l7 9 l-7 9 l-7 -9 Z" fill="#ede6d4" opacity="0.9"/>
+</svg>

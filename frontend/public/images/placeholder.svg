@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <pattern id="weave" width="14" height="14" patternUnits="userSpaceOnUse">
+      <rect width="14" height="14" fill="#efe8d8"/>
+      <path d="M0 7 H14" stroke="rgba(43,32,19,0.045)" stroke-width="1"/>
+      <path d="M7 0 V14" stroke="rgba(43,32,19,0.035)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#weave)"/>
+  <g transform="translate(400 275) scale(2.5)" opacity="0.35">
+    <path d="M0 -33 Q5 -20 12 -13 Q19 -19 25 -16 Q19 -6 17 -1 Q25 0 31 6 Q20 9 12 12 L5 16 L3 30 L-3 30 L-5 16 L-12 12 Q-20 9 -31 6 Q-25 0 -17 -1 Q-19 -6 -25 -16 Q-19 -19 -12 -13 Q-5 -20 0 -33 Z" fill="#857762"/>
+  </g>
+  <text x="400" y="415" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="4" fill="#857762" text-anchor="middle">PHOTO COMING SOON</text>
+  <rect x="18" y="18" width="764" height="564" fill="none" stroke="rgba(43,32,19,0.18)" stroke-width="1.5"/>
+</svg>

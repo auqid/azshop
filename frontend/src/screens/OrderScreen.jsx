@@ -15,7 +15,7 @@ import {
 } from '../slices/ordersApiSlice';
 import OrderLineItem from '../components/OrderLineItem';
 import OrderSummary from '../components/OrderSummary';
-import { formatDate } from '../utils/formatters';
+import OrderTimeline from '../components/OrderTimeline';
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -60,7 +60,14 @@ const OrderScreen = () => {
         loadPaypalScript();
       }
     }
-  }, [isPayPalOrder, errorPayPal, loadingPayPal, order, paypal, paypalDispatch]);
+  }, [
+    isPayPalOrder,
+    errorPayPal,
+    loadingPayPal,
+    order,
+    paypal,
+    paypalDispatch,
+  ]);
 
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
@@ -112,9 +119,7 @@ const OrderScreen = () => {
     </div>
   ) : error ? (
     <div className='container page'>
-      <Message variant='danger'>
-        {error?.data?.message || error.error}
-      </Message>
+      <Message variant='danger'>{error?.data?.message || error.error}</Message>
     </div>
   ) : (
     <div className='container page'>
@@ -126,6 +131,11 @@ const OrderScreen = () => {
       <div className='checkout-grid'>
         <div className='panel'>
           <div className='panel__section'>
+            <h2>Progress</h2>
+            <OrderTimeline order={order} />
+          </div>
+
+          <div className='panel__section'>
             <h2>Shipping</h2>
             <p style={{ margin: '0 0 0.35rem' }}>
               <strong>{order.user.name}</strong> ·{' '}
@@ -136,29 +146,12 @@ const OrderScreen = () => {
               {order.shippingAddress.postalCode},{' '}
               {order.shippingAddress.country}
             </p>
-            {order.isDelivered ? (
-              <Message variant='success'>
-                Delivered on {formatDate(order.deliveredAt)}
-              </Message>
-            ) : (
-              <Message>Not yet delivered</Message>
-            )}
           </div>
 
+          {/* Paid/delivered status lives in the timeline above */}
           <div className='panel__section'>
             <h2>Payment</h2>
             <p style={{ margin: 0 }}>{order.paymentMethod}</p>
-            {order.isPaid ? (
-              <Message variant='success'>
-                Paid on {formatDate(order.paidAt)}
-              </Message>
-            ) : (
-              <Message>
-                {order.paymentMethod === 'Cash on Delivery'
-                  ? 'Payment will be collected when the order arrives.'
-                  : 'Not yet paid'}
-              </Message>
-            )}
           </div>
 
           <div className='panel__section'>
@@ -203,34 +196,34 @@ const OrderScreen = () => {
             (!order.isDelivered ||
               (!order.isPaid &&
                 order.paymentMethod === 'Cash on Delivery')) && (
-            <div className='panel__section'>
-              {!order.isPaid &&
-                order.paymentMethod === 'Cash on Delivery' && (
-                  <button
-                    type='button'
-                    className='btn btn--dark btn--block'
-                    onClick={codPaidHandler}
-                    disabled={loadingPayCod}
-                    style={{ marginBottom: '0.75rem' }}
-                  >
-                    Mark as paid (cash collected)
-                  </button>
-                )}
-              {!order.isDelivered &&
-                (order.isPaid ||
-                  order.paymentMethod === 'Cash on Delivery') && (
-                  <button
-                    type='button'
-                    className='btn btn--block'
-                    onClick={deliverHandler}
-                    disabled={loadingDeliver}
-                  >
-                    Mark as delivered
-                  </button>
-                )}
-              {loadingDeliver && <Loader small />}
-            </div>
-          )}
+              <div className='panel__section'>
+                {!order.isPaid &&
+                  order.paymentMethod === 'Cash on Delivery' && (
+                    <button
+                      type='button'
+                      className='btn btn--dark btn--block'
+                      onClick={codPaidHandler}
+                      disabled={loadingPayCod}
+                      style={{ marginBottom: '0.75rem' }}
+                    >
+                      Mark as paid (cash collected)
+                    </button>
+                  )}
+                {!order.isDelivered &&
+                  (order.isPaid ||
+                    order.paymentMethod === 'Cash on Delivery') && (
+                    <button
+                      type='button'
+                      className='btn btn--block'
+                      onClick={deliverHandler}
+                      disabled={loadingDeliver}
+                    >
+                      Mark as delivered
+                    </button>
+                  )}
+                {loadingDeliver && <Loader small />}
+              </div>
+            )}
         </aside>
       </div>
     </div>

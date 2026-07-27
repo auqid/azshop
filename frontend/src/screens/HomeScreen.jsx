@@ -1,5 +1,6 @@
 import {
   Link,
+  useLocation,
   useNavigate,
   useParams,
   useSearchParams,
@@ -7,9 +8,9 @@ import {
 import { FaArrowLeft } from 'react-icons/fa';
 import { useGetProductsQuery } from '../slices/productsApiSlice';
 import Product from '../components/Product';
-import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Paginate from '../components/Paginate';
+import ProductGridSkeleton from '../components/ProductGridSkeleton';
 import CategoryNav from '../components/CategoryNav';
 import FilterBar from '../components/FilterBar';
 import Hero from '../components/Hero';
@@ -20,6 +21,10 @@ const HomeScreen = () => {
   const { pageNumber, keyword, category } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  // /search with no keyword lists the whole catalogue in results form
+  const isSearch = pathname.startsWith('/search');
 
   const filters = {
     sort: searchParams.get('sort') || '',
@@ -46,25 +51,29 @@ const HomeScreen = () => {
     });
     const base = keyword
       ? `/search/${keyword}`
-      : category
-      ? `/category/${encodeURIComponent(category)}`
-      : '/';
+      : isSearch
+        ? '/search'
+        : category
+          ? `/category/${encodeURIComponent(category)}`
+          : '/';
     navigate({ pathname: base, search: params.toString() }, { replace: true });
   };
 
   const heading = keyword
     ? `Results for “${keyword}”`
     : category
-    ? category
-    : 'The crafts';
+      ? category
+      : isSearch
+        ? 'Everything we make'
+        : 'The crafts';
 
   return (
     <>
       <Meta title={category ? `${category} — Nargis` : undefined} />
-      {!keyword && <Hero />}
+      {!isSearch && <Hero />}
 
       <div className='container page' id='crafts'>
-        {keyword && (
+        {isSearch && (
           <Link to='/' className='back-link'>
             <FaArrowLeft /> Back to all crafts
           </Link>
@@ -75,7 +84,12 @@ const HomeScreen = () => {
 
         <div className='catalog'>
           {isLoading ? (
-            <Loader />
+            <>
+              <div className='section-head'>
+                <h2>{heading}</h2>
+              </div>
+              <ProductGridSkeleton />
+            </>
           ) : error ? (
             <Message variant='danger'>
               {error?.data?.message || error.error}
@@ -108,13 +122,14 @@ const HomeScreen = () => {
                 page={data.page}
                 keyword={keyword ? keyword : ''}
                 category={category ? category : ''}
+                searchAll={isSearch && !keyword}
               />
             </>
           )}
         </div>
       </div>
 
-      {!keyword && !category && <PoemBand />}
+      {!isSearch && !category && <PoemBand />}
     </>
   );
 };
